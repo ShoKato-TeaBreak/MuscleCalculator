@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  mets_high: 1.5
+  mets_middle: 1.5
+  mets_low: 1.5
+
+two:
+  name: MyString
+  mets_high: 1.5
+  mets_middle: 1.5
+  mets_low: 1.5
