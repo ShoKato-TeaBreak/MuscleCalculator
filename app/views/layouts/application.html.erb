@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>MuscleCalories</title>
+    <title>MuscleCalculator</title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -14,14 +14,14 @@
     
     <div class="header">
       <div class="header-left">
-        <%= link_to("MuscleCalories", "/") %>
+        <%= link_to("MuscleCalculator", "/") %>
       </div>
       <div class="header-right">
         <% if @current_user %>
             <%= link_to("マイページ", "/users/#{@current_user.id}") %>
             <%= link_to("ログアウト", "/users/sign_out", data: {"turbo-method": :delete}) %>
         <% else %>
-            <%= link_to("MuscleCaloriesとは", "/about") %>
+            <%= link_to("MuscleCalculatorとは", "/about") %>
             <%= link_to("ログイン", "/users/sign_in") %>
             <%= link_to("新規登録", new_user_path) %>
         <% end %>
@@ -38,7 +38,7 @@
 
     <div class="footer">
       <div class="footer-left">
-        <%= link_to("MuscleCalories", "/") %>
+        <%= link_to("MuscleCalculator", "/") %>
       </div>
       <div class="footer-right">
         <%= link_to("カロリー計算について", "/exercise/index") %>
