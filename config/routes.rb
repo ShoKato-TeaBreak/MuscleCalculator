@@ -17,7 +17,9 @@ resources :users, only: [
   :destroy   # ユーザの削除処理
 ]
 
-  get 'exercises/index'#エクササイズ情報一覧画面
-  get 'exercises/show'#ここのエクササイズの詳細表示画面
+  resources :exercises, only: [
+    :index,#エクササイズ一覧画面
+    :show#ここのエクササイズの詳細表示画面
+  ]
 
 end

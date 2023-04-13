@@ -18,6 +18,7 @@
       </div>
       <div class="header-right">
         <% if @current_user %>
+            <%= link_to("エクササイズ一覧", exercises_path) %>
             <%= link_to("マイページ", "/users/#{@current_user.id}") %>
             <%= link_to("ログアウト", "/users/sign_out", data: {"turbo-method": :delete}) %>
         <% else %>

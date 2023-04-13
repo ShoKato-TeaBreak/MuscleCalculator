@@ -1,2 +1,12 @@
-<h1>Exercises#index</h1>
-<p>Find me in app/views/exercises/index.html.erb</p>
+<h1>トレーニング項目一覧</h1>
+
+<% @exercises.each do |exercise| %>
+    <p> <%= link_to("トレーニング名称 : #{exercise.name}", exercise_path(exercise.id)) %> </p>
+<% end %>
+
+<h2>有酸素運動</h2>
+
+<h2>マシントレーニング</h2>
+
+<h2>自重トレーニング</h2>
+
