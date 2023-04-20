@@ -29,16 +29,12 @@ class WorkoutsController < ApplicationController
     else
       mets = exercise.mets_middle
     end
-    puts "mets: #{mets}"
+
     #ユーザーの体重を取得
     weight = User.find_by(id: @current_user.id).weight
-    puts "weight: #{weight}"
-    reps = params[:workout][:reps].to_i
-speed = params[:workout][:speed].to_i
-puts "reps: #{reps}, speed: #{speed}"
     #トレーニングのカロリーを計算
     calories = mets * weight * ((params[:workout][:reps].to_i * params[:workout][:speed].to_i) / 3600.0) * 1.05
-    puts "calories: #{calories}"
+
     @workout = Workout.new(
       user_id: @current_user.id,
       date: params[:workout][:date],
@@ -67,6 +63,50 @@ puts "reps: #{reps}, speed: #{speed}"
     @workout = Workout.find(params[:id])
   end
 
+  def edit
+    @workout = Workout.find(params[:id])
+    @exercises = Exercise.all
+  end
+
+  def update
+    @workout = Workout.find(params[:id])
+    exercise = Exercise.find_by(name: params[:workout][:name])
+
+    #選択された運動強度によってmets値を変更
+    case params[:workout][:level]
+    when 'high'
+      mets = exercise.mets_high
+    when 'low'
+      mets = exercise.mets_low
+    else
+      mets = exercise.mets_middle
+    end
+
+    #ユーザーの体重を取得
+    weight = User.find_by(id: @current_user.id).weight
+    #トレーニングのカロリーを計算
+    calories = mets * weight * ((params[:workout][:reps].to_i * params[:workout][:speed].to_i) / 3600.0) * 1.05
+
+    if @workout.update(
+      user_id: @current_user.id,
+      date: params[:workout][:date],
+      name: params[:workout][:name],
+      sets: params[:workout][:sets],
+      weight: params[:workout][:weight],
+      reps: params[:workout][:reps],
+      speed: params[:workout][:speed],
+      level: params[:workout][:level],
+      calories: calories.round(3)
+    )
+      flash[:notice] = "トレーニングを更新しました"
+      redirect_to workout_path
+    else
+      flash[:error_message] = @workout.errors.messages
+      redirect_to edit_workout_path(@workout)
+    end
+  end
+    
+
   def destroy
     @workout = Workout.find(params[:id])
     puts "workout: #{@workout.inspect}"
@@ -77,14 +117,12 @@ puts "reps: #{reps}, speed: #{speed}"
   end
 
   #呼び出し元のURLによってリダイレクト先を変更
-  #editアクションとdestroyアクションで利用する
   def determine_redirect_path
     referrer = params[:referrer]
-    puts "呼び出し元のURL情報 : referrer: #{referrer}"
-    if referrer.include?(new_workout_path)
-      new_workout_path
-    else
+    if referrer.include?(workout_path)#呼び出し元がshowアクションの場合は、indexアクションにリダイレクト
       workouts_path
+    else
+      referrer
     end
   end
 end

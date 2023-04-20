@@ -1,0 +1,60 @@
+<h1>トレーニング内容の編集</h1>
+
+
+<% if flash[:error_message] %>
+    <ul>
+        <% flash[:error_message].each do |attribute, message| %>
+            <% message.uniq.each do |display| %>
+                <li><%= display %></li>
+            <% end %>
+        <% end %>
+    </ul>
+<% end %>
+
+<%= form_with model: @workout, local: true do |form| %>
+    
+    <div class="field">
+        <%= form.label :date, "トレーニング日" %><br>
+        <%= form.date_field :date %>
+    </div>
+
+    <div class="field">
+        <%= form.label :name, "トレーニング項目" %><br>
+        <% select_options = [["-", "" ]] + @exercises.map { |exercise| [exercise.name, exercise.name] } %>
+        <%= form.select :name, select_options %>
+    </div>
+
+    <div class="field">
+        <%= form.label :sets, "何セット目のトレーニングですか？" %><br>
+        <% select_options = [["-", "" ]] + (1..10).map { |n| [n, n] } %>
+        <%= form.select :sets, select_options %>
+    </div>
+    
+    <div class="field">
+        <%= form.label :weight, "重量(kg)" %><br>
+        <% select_options = [["-", "" ]] + (1..200).map { |n| [n * 0.5, n * 0.5] } %>
+        <%= form.select :weight, select_options %>
+    </div>
+    
+    <div class="field">
+        <%= form.label :reps, "回数" %><br>
+        <% select_options = [["-", "" ]] + (1..100).map { |n| [n, n] } %>
+        <%= form.select :reps, select_options %>
+    </div>
+
+    <div class="field">
+        <%= form.label :speed, "トレーニング速度" %><br>
+        <% select_options = [["-", ""]] + [["クイックトレーニング(1回2秒程度)", 2], ["スロートレーニング(1回5秒程度)", 5]] %>
+        <%= form.select :speed, select_options %>
+    </div>
+
+    <div class="field">
+        <%= form.label :level, "運動強度" %><br>
+        <% select_options = [["-", ""]] + [["易しい", "low"], ["ふつう", "middle"], ["きつい", "high"]] %>
+        <%= form.select :level,  select_options%>
+    </div>
+
+    <div class="actions">
+        <%= form.submit %>
+    </div>
+<% end %>

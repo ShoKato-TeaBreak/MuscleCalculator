@@ -1,7 +1,4 @@
 Rails.application.routes.draw do
-  get 'workouts/index'
-  get 'workouts/new'
-  get 'workouts/show'
 
   get '/about' => 'pages#about'#アプリについての説明ページ
   root 'pages#top'#トップページ

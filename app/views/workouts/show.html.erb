@@ -1,2 +1,19 @@
-<h1>Workouts#show</h1>
-<p>Find me in app/views/workouts/show.html.erb</p>
+<h1>トレーニングの詳細</h1>
+<div class="workout_show">
+    <h2><span class="show_left">日付</span><span class="show_right"><%= @workout.date %></span></h2>
+    <h3><span class="show_left">トレーニング項目</span><span class="show_right"><%= @workout.name %></h3>
+    <p><span class="show_left">セット</span><span class="show_right"><%= @workout.sets %>セット目</span></p>
+    <p><span class="show_left">重量</span><span class="show_right"><%= @workout.weight %>kg</span></p>
+    <p><span class="show_left">回数</span><span class="show_right"><%= @workout.reps %>回</span></p>
+    <p><span class="show_left">1回の時間</span><span class="show_right"><%= @workout.speed %>秒</span></p>
+    <p><span class="show_left">トレーニング強度</span><span class="show_right"><%= @workout.level %></span></p>
+    <p><span class="show_left">消費カロリー</span><span class="show_right"><%= @workout.calories %>kcal</span></p>
+
+    <p><span><%= link_to("編集", edit_workout_path(@workout, referrer: request.original_url)) %></span>
+    <span><%= link_to("削除", workout_path(@workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span></p>
+</div>
+
+<div>
+    <%= link_to("新規投稿ページへ", new_workout_path(date: @workout.date)) %>
+    <%= link_to("投稿トレーニング一覧へ", workouts_path) %>
+</div>

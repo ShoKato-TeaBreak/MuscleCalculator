@@ -2,14 +2,14 @@
 <h2>新しい投稿</h2>
 
 <% if flash[:error_message] %>
-        <ul>
-            <% flash[:error_message].each do |attribute, message| %>
-                <% message.uniq.each do |display| %>
-                    <li><%= display %></li>
-                <% end %>
+    <ul>
+        <% flash[:error_message].each do |attribute, message| %>
+            <% message.uniq.each do |display| %>
+                <li><%= display %></li>
             <% end %>
-        </ul>
-    <% end %> 
+        <% end %>
+    </ul>
+<% end %>
 
 <% if params[:date].blank? %>
 
@@ -98,14 +98,15 @@
         <% @workout_today.each do |workout| %>
             <div class="record">
                 <span>トレーニング項目: <%= workout.name %></span>
-                <span>セット数: <%= workout.sets %></span>
+                <span>セット: 第<%= workout.sets %>セット</span>
                 <span>重量: <%= workout.weight %>kg</span>
                 <span>回数: <%= workout.reps %>回</span>
                 <span>トレーニング速度: <%= workout.speed %>秒</span>
-                <span>トレーニング強度: <%= workout.level %></span>
+                <span>運動強度: <%= workout.level %></span>
                 <span>消費カロリー: <%= workout.calories %></span>
 
-                <%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %>
+                <span><%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %></span>
+                <span><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span>
             </div>
         <% end %>
     <% end %>

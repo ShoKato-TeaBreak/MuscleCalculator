@@ -1,5 +1,7 @@
 <h1>投稿内容一覧</h1>
-<% if @workouts %>
+<% if @workouts.blank? %>
+    <p>投稿がありません</p>
+<% else %>
     <% @workouts.each do |workout| %>
         <div class="record">
             <span>トレーニング項目: <%= workout.name %></span>
@@ -10,12 +12,11 @@
             <span>トレーニング強度: <%= workout.level %></span>
             <span>消費カロリー: <%= workout.calories %></span>
 
-            <%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %>
+            <%= link_to("投稿詳細", workout_path(workout)) %>
+            <%= link_to("編集", edit_workout_path(workout)) %>
             <%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %>
         </div>
     <% end %>
-<% else %>
-    <p>投稿がありません</p>
 <% end %>
 
 <p></p>
