@@ -1,0 +1,112 @@
+<h1>トレーニング投稿</h1>
+<h2>新しい投稿</h2>
+
+<% if flash[:error_message] %>
+        <ul>
+            <% flash[:error_message].each do |attribute, message| %>
+                <% message.uniq.each do |display| %>
+                    <li><%= display %></li>
+                <% end %>
+            <% end %>
+        </ul>
+    <% end %> 
+
+<% if params[:date].blank? %>
+
+    <%= form_with url: new_workout_path, method: :get, local: true do |form| %>
+        <div class="field">
+            <%= form.label :date, "トレーニング日を入力してください" %><br>
+            <%= form.date_field :date, value: Time.now.strftime("%Y-%m-%d") %>
+        </div>
+        <div class="actions">
+            <%= form.submit %>
+        </div>
+    <% end %>
+
+<% else %>
+
+    <p>トレーニング日: <%= params[:date] %></p>
+    <%= link_to("日付の変更", new_workout_path) %>
+
+    <% if params[:name].blank? %>
+
+        <p>投稿するトレーニング項目を選択してください</p>
+        <% @exercises.each do |exercise| %>
+            <%= link_to exercise.name, new_workout_path(name: exercise.name, date: params[:date]) %>
+        <% end %>
+
+    <% else %>
+
+        <p>トレーニング項目: <%= params[:name] %></p>
+        <%= link_to("トレーニング項目の変更", new_workout_path(date: params[:date])) %>
+
+    <% end %>
+    
+<% end %>
+
+
+<% if params[:date] && params[:name] %>
+
+    <%= form_with model: @workout, method: :post, local: true do |form| %>
+        
+        <%= form.hidden_field :name, value: params[:name] %>
+        <%= form.hidden_field :date, value: params[:date] %>
+
+        <div class="field">
+            <%= form.label :sets, "何セット目のトレーニングですか？" %><br>
+            <% select_options = [["-", "" ]] + (1..10).map { |n| [n, n] } %>
+            <%= form.select :sets, select_options %>
+        </div>
+        
+        <div class="field">
+            <%= form.label :weight, "重量(kg)" %><br>
+            <% select_options = [["-", "" ]] + (1..200).map { |n| [n * 0.5, n * 0.5] } %>
+            <%= form.select :weight, select_options %>
+        </div>
+        
+        <div class="field">
+            <%= form.label :reps, "回数" %><br>
+            <% select_options = [["-", "" ]] + (1..100).map { |n| [n, n] } %>
+            <%= form.select :reps, select_options %>
+        </div>
+
+        <div class="field">
+            <%= form.label :speed, "トレーニング速度" %><br>
+            <% select_options = [["-", ""]] + [["クイックトレーニング(1回2秒程度)", 2], ["スロートレーニング(1回5秒程度)", 5]] %>
+            <%= form.select :speed, select_options %>
+        </div>
+
+        <div class="field">
+            <%= form.label :level, "運動強度" %><br>
+            <% select_options = [["-", ""]] + [["易しい", "low"], ["ふつう", "middle"], ["きつい", "high"]] %>
+            <%= form.select :level,  select_options%>
+        </div>
+
+        <div class="actions">
+            <%= form.submit %>
+        </div>
+    <% end %>
+<% end %>
+
+<% if params[:date].blank? %>
+    <p>日付選択後、その日のトレーニング記録を表示します</p>
+<% else %>
+    <% if @workout_today.blank? %>
+        <h2><%= params[:date] %>のトレーニング履歴はまだありません</h2>
+    <% else %>
+        <h2><%= params[:date] %>のトレーニング履歴</h2>
+        <% @workout_today.each do |workout| %>
+            <div class="record">
+                <span>トレーニング項目: <%= workout.name %></span>
+                <span>セット数: <%= workout.sets %></span>
+                <span>重量: <%= workout.weight %>kg</span>
+                <span>回数: <%= workout.reps %>回</span>
+                <span>トレーニング速度: <%= workout.speed %>秒</span>
+                <span>トレーニング強度: <%= workout.level %></span>
+                <span>消費カロリー: <%= workout.calories %></span>
+
+                <%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
