@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   ]
 
 
+  get 'workouts/calendar/:id' => 'workouts#calendar'
 
   resources :workouts, only: [
     :index,#ユーザのワークアウト一覧画面

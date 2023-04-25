@@ -9,5 +9,9 @@ class User < ApplicationRecord
     validates :sex, presence: {message: "性別を男か女で入力してください"}, inclusion: {in: ['男','女'], message: "性別を男か女で入力してください"}, length: { maximum: 1, minimum: 1, message: "性別を男か女で入力してください"}
 
     validates :password, presence: {message: "パスワードが入力されていません"}, length: { minimum: 8, message: "パスワードは8文字以上で入力してください"}
+    
+    def start_time
+        date
+      end
 
 end

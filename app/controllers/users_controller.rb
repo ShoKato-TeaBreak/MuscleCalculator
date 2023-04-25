@@ -64,9 +64,28 @@ class UsersController < ApplicationController
     end
   end
 
+  def show
+    @user = User.find_by(id: @current_user.id)
+    @workouts = Workout.where(user_id: @user.id).order(date: :desc)
+    @workouts_today = Workout.where(date: Time.zone.now.all_day, user_id: @user.id)
+    @workouts_this_month = Workout.where(user_id: @user.id, date: Time.zone.now.all_month)
 
+    #今日のトレーニングのカロリーを計算
+    @calories_today = 0
+    if @workouts_today.present?
+      @workouts_today.each do |workout|
+        @calories_today += workout.calories
+      end
+    end
 
-  def home
+    #今月のトレーニングのカロリーを計算
+    @calories_this_month = 0
+    if @workouts_this_month.present?
+      @workouts_this_month.each do |workout|
+        @calories_this_month += workout.calories
+      end
+    end
+
   end
 
   def account

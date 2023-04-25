@@ -13,7 +13,7 @@ class WorkoutsController < ApplicationController
       level: flash[:level],
       date: params[:date]
     )
-    @workout_today = Workout.where(date: Time.zone.now.all_day, user_id: @current_user.id)
+    @workout_today = Workout.where(date: params[:date], user_id: @current_user.id)
     @exercises = Exercise.all
   end
 
@@ -61,6 +61,11 @@ class WorkoutsController < ApplicationController
 
   def show
     @workout = Workout.find(params[:id])
+  end
+
+  def calendar
+    @workouts = Workout.where(user_id: @current_user.id)
+
   end
 
   def edit

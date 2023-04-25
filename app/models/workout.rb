@@ -11,4 +11,8 @@ class Workout < ApplicationRecord
     # belongs_to :user
     # belongs_to :exercise
 
+    def start_time
+        date
+      end
+
 end
