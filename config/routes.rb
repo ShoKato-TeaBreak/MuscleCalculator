@@ -22,8 +22,9 @@ Rails.application.routes.draw do
     :show#ここのエクササイズの詳細表示画面
   ]
 
-
-  get 'workouts/calendar/:id' => 'workouts#calendar'
+  get 'workouts/calendar/year/:id' => 'workouts#calendar_year'
+  get 'workouts/calendar/month/:id/:date' => 'workouts#calendar_month'
+  get 'workouts/calendar/day/:id/:date' => 'workouts#calendar_day'
 
   resources :workouts, only: [
     :index,#ユーザのワークアウト一覧画面

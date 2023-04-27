@@ -1,4 +1,7 @@
-
+/*simple-calendarのデフォルトcssを適用*/
+/*
+  *= require simple_calendar
+*/
 
 *{
     box-sizing: border-box;
@@ -9,7 +12,7 @@
     clear: both;
 }
 
-
+/* simple-calendarのデフォルトcssに追加したい部分を記述 */
 .simple-calendar .has-events{
   background-color: yellowgreen;
 }
@@ -19,9 +22,41 @@
 .simple-calendar .calendar-heading a{
   display: none;
 }
+.simple-calendar table{
+  width: 100%;
+  margin: 0 auto;
+}
+.simple-calendar table .next-month, .simple-calendar table .prev-month{
+  background-color: #DDD;
+}
 
-.custom-yearly-calendar .calendar-month{
-  display: inline-block;
+
+/* 年間トレーニング履歴を表示するためのレイアウトを整える */
+.custom-yearly-calendar{
+  margin: 100px auto;
+  max-width: 1200px;
+}
+.custom-yearly-calendar .custom-month-calendar{
+  display: block;
+  text-align: center;
+  width: 25%;
+  padding: 0 10px;
+  font-size: 18px;
+  height: 250px;
+  float: left;
+}
+.custom-yearly-calendar .calendar-title{
+  display: none;
+}
+
+/* スマホ用のスタイル */
+/* PC用は1行に4ヶ月分表示 */
+/* スマホ用は1行に2ヶ月分表示 */
+@media (max-width: 720px) {
+  .custom-yearly-calendar .custom-month-calendar{
+    width: 50%;
+    font-size: 14px;
+  }
 }
 
 

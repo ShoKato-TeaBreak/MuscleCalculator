@@ -8,27 +8,32 @@
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-    <%= yield :extra_stylesheets %>
   </head>
 
   <body>
     
     <div class="header">
-      <div class="header-left">
-        <%= link_to("MuscleCalculator", "/") %>
+      <div class="header-first-line">
+        <div class="header-left">
+          <%= link_to("MuscleCalculator", "/") %>
+        </div>
+        <div class="header-right">
+          <% if @current_user %>
+              <%= link_to("ログアウト", "/users/sign_out", data: {"turbo-method": :delete}) %>
+          <% else %>
+              <%= link_to("MuscleCalculatorとは", "/about") %>
+              <%= link_to("ログイン", "/users/sign_in") %>
+              <%= link_to("新規登録", new_user_path) %>
+          <% end %>
+        </div>
+        <div class="clear"></div>
       </div>
-      <div class="header-right">
-        <% if @current_user %>
-            <%= link_to("トレーニング投稿", new_workout_path) %>
-            <%= link_to("エクササイズ一覧", exercises_path) %>
-            <%= link_to("マイページ", "/users/#{@current_user.id}") %>
-            <%= link_to("ログアウト", "/users/sign_out", data: {"turbo-method": :delete}) %>
-        <% else %>
-            <%= link_to("MuscleCalculatorとは", "/about") %>
-            <%= link_to("ログイン", "/users/sign_in") %>
-            <%= link_to("新規登録", new_user_path) %>
-        <% end %>
-      </div>
+      <div class="header-second-line">
+        <%= link_to("マイページ", "/users/#{@current_user.id}") %>
+        <%= link_to("トレーニング投稿", new_workout_path) %>
+        <%= link_to("エクササイズ一覧", exercises_path) %>
+        <%= link_to("トレーニングカレンダー", "/workouts/calendar/year/#{@current_user.id}") %>
+
     </div>
 
     <% if flash[:notice] %>

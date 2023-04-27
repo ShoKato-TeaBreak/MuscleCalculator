@@ -1,7 +1,4 @@
-<!--simple-calenderのcssをこのビューファイルではonにする-->
-<% content_for :extra_stylesheets do %>
-  <%= stylesheet_link_tag "custom_simple_calendar" %>
-<% end %>
+
 
 <h1><%= @current_user.name %>さんマイページ</h1>
 
@@ -25,7 +22,7 @@
 
 <h2>今月のトレーニング記録</h2>
 
-    <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/#{@user.id}") %>
+    <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year/#{@user.id}") %>
 
     <% if @workouts_this_month.blank? %>
         <p>今月はまだトレーニングが記録されていません</p>

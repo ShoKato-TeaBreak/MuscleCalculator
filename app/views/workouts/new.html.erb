@@ -88,13 +88,14 @@
     <% end %>
 <% end %>
 
+<h2>トレーニング履歴</h2>
 <% if params[:date].blank? %>
-    <p>日付選択後、その日のトレーニング記録を表示します</p>
+    <h3>日付選択後、その日のトレーニング記録を表示します</h3>
 <% else %>
     <% if @workout_today.blank? %>
-        <h2><%= params[:date] %>のトレーニング履歴はまだありません</h2>
+        <h3><%= params[:date] %>のトレーニング履歴はまだありません</h3>
     <% else %>
-        <h2><%= params[:date] %>のトレーニング履歴</h2>
+        <h3><%= params[:date] %>のトレーニング履歴</h3>
         <% @workout_today.each do |workout| %>
             <div class="record">
                 <span>トレーニング項目: <%= workout.name %></span>
