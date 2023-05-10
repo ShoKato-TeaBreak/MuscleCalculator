@@ -29,21 +29,22 @@
     <% else %>
         <h3>今月の消費カロリー合計</h3>
         <p><%= @calories_this_month %>kcal</p>
+    <% end %>
 
-        <%= month_calendar events: @workouts_this_month do |date, workouts| %>
-            <%= date.day %>
-            <% if workouts.present? %>
-                <% calories_day = 0 %>
-                <% i = 0 %>
-                <% workouts.each do |workout| %>
-                    <% calories_day += workout.calories %>
-                    <% i += 1 %>
-                <% end %>
-                <%= "データ数:#{i}, 消費カロリー:#{calories_day}" %>
+<h3>トレーニングカレンダー</h3>
+    <%= month_calendar events: @workouts_this_month do |date, workouts| %>
+        <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
+        <% if workouts.present? %>
+            <% calories_day = 0 %>
+            <% i = 0 %>
+            <% workouts.each do |workout| %>
+                <% calories_day += workout.calories %>
+                <% i += 1 %>
             <% end %>
-
+            <p class="calories-display"><%= calories_day.round %></p>
+            <p class="calories-display">(kcal)</p>
         <% end %>
-    
+
     <% end %>
 
 <h2>アカウント設定</h2>

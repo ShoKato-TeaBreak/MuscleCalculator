@@ -6,12 +6,19 @@
     <% end %>
 
     <%= form_with url:"/users/sign_in", method: :post, local:true  do |form| %>
-        <%= form.label :email, 'メールアドレス' %>
-        <%= form.text_field :email, value: flash[:email] %>
 
-        <%= form.label :password, 'パスワード' %>
-        <%= form.password_field :password %>
+        <div class="field">
+            <div class="field-label"><%= form.label :email, 'メールアドレス' %></div>
+            <div class="field-form"><%= form.text_field :email, value: flash[:email] %></div>
+        </div>
 
-        <%= form.submit 'ログイン' %>
+        <div class="field">
+            <div class="field-label"><%= form.label :password, 'パスワード' %></div>
+            <div class="field-form"><%= form.password_field :password %></div>
+        </div>
+
+        <div class="actions">
+            <div class="button"><%= form.submit 'ログイン' %></div>
+        </div>
     <% end %>
 </div>

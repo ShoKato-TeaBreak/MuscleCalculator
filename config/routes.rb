@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  get '/about' => 'pages#about'#アプリについての説明ページ
   root 'pages#top'#トップページ
 
 

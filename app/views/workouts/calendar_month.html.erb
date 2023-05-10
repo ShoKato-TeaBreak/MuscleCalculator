@@ -8,19 +8,23 @@
     <h3><%= "#{@target_month.year}年#{@target_month.month}月" %>の消費カロリー合計</h3>
     <p><%= @calories_this_month %>kcal</p>
 
-    <%= month_calendar(attribute: :date, start_date: @target_month, events: @workouts_this_month) do |date, workouts| %>
-        <%= link_to(date.day, "/workouts/calendar/day/#{params[:id]}/#{date}") %>
-        <% if workouts.present? %>
-            <% calories_day = 0 %>
-            <% i = 0 %>
-            <% workouts.each do |workout| %>
-                <% calories_day += workout.calories %>
-                <% i += 1 %>
-            <% end %>
-            <%= "データ数:#{i}, 消費カロリー:#{calories_day}" %>
-        <% end %>
+    <div class='month-calendar'>
+        <%= month_calendar(attribute: :date, start_date: @target_month, events: @workouts_this_month) do |date, workouts| %>
+            <p><%= link_to(date.day, "/workouts/calendar/day/#{params[:id]}/#{date}") %></p>
+            <% if workouts.present? %>
+                <% calories_day = 0 %>
+                <% i = 0 %>
+                <% workouts.each do |workout| %>
+                    <% calories_day += workout.calories %>
+                    <% i += 1 %>
+                <% end %>
+                <p class="calories-display"><%= calories_day.round %></p>
+                <p class="calories-display">(kcal)</p>
 
-    <% end %>
+            <% end %>
+
+        <% end %>
+    </div>
 
 <% end %>
 

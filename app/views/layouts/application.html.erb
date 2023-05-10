@@ -7,51 +7,93 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "calendar", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
     
-    <div class="header">
-      <div class="header-first-line">
-        <div class="header-left">
-          <%= link_to("MuscleCalculator", "/") %>
-        </div>
-        <div class="header-right">
-          <% if @current_user %>
-              <%= link_to("ログアウト", "/users/sign_out", data: {"turbo-method": :delete}) %>
-          <% else %>
-              <%= link_to("MuscleCalculatorとは", "/about") %>
-              <%= link_to("ログイン", "/users/sign_in") %>
-              <%= link_to("新規登録", new_user_path) %>
-          <% end %>
-        </div>
-        <div class="clear"></div>
+    <header>
+      <%= link_to "/" do %>
+        <%= image_tag "logo", alt: "logo", class: "logo" %>
+      <% end %>
+
+      <!-- モバイル表示用のハンバーガーメニュー -->
+      <div class="hamburger-menu mobile-only">
+        <span></span>
+        <span></span>
+        <span></span>
+        <!-- ここにハンバーガーメニューの項目を6個追加 -->
       </div>
-      <div class="header-second-line">
-        <%= link_to("マイページ", "/users/#{@current_user.id}") %>
-        <%= link_to("トレーニング投稿", new_workout_path) %>
-        <%= link_to("エクササイズ一覧", exercises_path) %>
-        <%= link_to("トレーニングカレンダー", "/workouts/calendar/year/#{@current_user.id}") %>
+      
+      <div class="clear"></div>
+    </header>
 
-    </div>
-
+    <!-- フラッシュメッセージ -->
     <% if flash[:notice] %>
         <div class="notice">
             <%= flash[:notice] %>
         </div>
     <% end %>
+
     
-    <%= yield %>
+    <!-- 画面下部のナビゲーション -->
+    <nav class="bottom-nav">
+      <% if @current_user %>
+        <%= link_to "マイページ", user_path(@current_user) %>
+        <%= link_to "新規投稿", new_workout_path %>
+      <% else %>
+        <%= link_to "ログイン", "/users/sign_in" %>
+        <%= link_to "新規登録", new_user_path %>
+      <% end %>
+    </nav>
+
+    <!--メインの表示部分 -->
+    <main>
+
+      <!-- メインコンテンツ部分 -->
+      <div class="main-content">
+        <%= yield %>
+      </div>
+
+      <!-- PC表示用のサイドバー -->
+      <aside class="sidebar pc-only">
+        <% if @current_user %>
+          <ul>
+            <li><%= link_to "マイページ", user_path(@current_user) %></li>
+            <li><%= link_to "新規投稿", new_workout_path %></li>
+            <li><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
+            <li><%= link_to "トレーニング履歴", "" %>
+            <li><%= link_to "", "" %>
+            <li><%= link_to "", "" %>
+            <li><%= link_to "", "" %>
+          </ul>
+        <% else %>
+          <ul>
+            <li><%= link_to "ログイン", "/users/sign_in" %></li>
+            <li><%= link_to "新規登録", new_user_path %></li>
+          </ul>
+        <% end %>
+      </aside>
+
+      <div class="clear"></div>
+
+    </main>
+    
+
 
     <div class="footer">
+
       <div class="footer-left">
         <%= link_to("MuscleCalculator", "/") %>
       </div>
+    
       <div class="footer-right">
         <%= link_to("カロリー計算について", "/exercise/index") %>
       </div>
+    
+      <div class="clear"></div>
+    
     </div>
-
   </body>
 </html>
