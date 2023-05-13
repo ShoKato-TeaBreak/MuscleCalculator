@@ -60,18 +60,19 @@
       <aside class="sidebar pc-only">
         <% if @current_user %>
           <ul>
-            <li><%= link_to "マイページ", user_path(@current_user) %></li>
-            <li><%= link_to "新規投稿", new_workout_path %></li>
-            <li><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
-            <li><%= link_to "トレーニング履歴", "" %>
-            <li><%= link_to "", "" %>
-            <li><%= link_to "", "" %>
-            <li><%= link_to "", "" %>
+            <li class="sidebar-item sidebar-heading">メニュー</li>
+            <li class="sidebar-item"><%= link_to "マイページ", user_path(@current_user) %></li>
+            <li class="sidebar-item"><%= link_to "新規投稿", new_workout_path %></li>
+            <li class="sidebar-item"><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
+            <li class="sidebar-item"><%= link_to "トレーニング記録", "/workouts/calendar/year" %>
+            <li class="sidebar-item"><%= link_to "", "" %>
+            <li class="sidebar-item"><%= link_to "", "" %>
+            <li class="sidebar-item"><%= link_to "", "" %>
           </ul>
         <% else %>
           <ul>
-            <li><%= link_to "ログイン", "/users/sign_in" %></li>
-            <li><%= link_to "新規登録", new_user_path %></li>
+            <li class="sidebar-item"><%= link_to "ログイン", "/users/sign_in" %></li>
+            <li class="sidebar-item"><%= link_to "新規登録", new_user_path %></li>
           </ul>
         <% end %>
       </aside>

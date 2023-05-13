@@ -14,7 +14,7 @@
 
 <div class="custom-yearly-calendar">
     <% 11.downto(0) do |i| %>
-        <% start_date = @start_month.prev_month(i) %>
+        <% start_date = @end_month.prev_month(i) %>
 
         <div class="custom-month-calendar">
             <%= link_to("#{start_date.year}年 #{start_date.month}月", "/workouts/calendar/month/#{@current_user.id}/#{start_date}") %>

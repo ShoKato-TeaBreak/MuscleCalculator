@@ -18,36 +18,40 @@
         <% end %>
     <% end %>
 
-    <div><%= link_to("トレーニングを投稿する", new_workout_path(date: Time.now.strftime("%Y-%m-%d"))) %></div>
-
+    <div class="block">
+        <%= link_to("トレーニングを投稿する", new_workout_path(date: Time.now.strftime("%Y-%m-%d")), class: "button red-gradient") %>
+    </div>
 <h2>今月のトレーニング記録</h2>
 
-    <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year/#{@user.id}") %>
-
+    <h3>今月の消費カロリー合計</h3>
     <% if @workouts_this_month.blank? %>
         <p>今月はまだトレーニングが記録されていません</p>
     <% else %>
-        <h3>今月の消費カロリー合計</h3>
         <p><%= @calories_this_month %>kcal</p>
     <% end %>
 
-<h3>トレーニングカレンダー</h3>
-    <%= month_calendar events: @workouts_this_month do |date, workouts| %>
-        <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
-        <% if workouts.present? %>
-            <% calories_day = 0 %>
-            <% i = 0 %>
-            <% workouts.each do |workout| %>
-                <% calories_day += workout.calories %>
-                <% i += 1 %>
+    <h3>トレーニングカレンダー</h3>
+        <%= month_calendar events: @workouts_this_month do |date, workouts| %>
+            <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
+            <% if workouts.present? %>
+                <% calories_day = 0 %>
+                <% i = 0 %>
+                <% workouts.each do |workout| %>
+                    <% calories_day += workout.calories %>
+                    <% i += 1 %>
+                <% end %>
+                <p class="calories-display"><%= calories_day.round %></p>
+                <p class="calories-display">(kcal)</p>
             <% end %>
-            <p class="calories-display"><%= calories_day.round %></p>
-            <p class="calories-display">(kcal)</p>
+
         <% end %>
 
-    <% end %>
+        <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year", class: "button red-gradient") %>
 
 <h2>アカウント設定</h2>
-<h3> <%= link_to("登録情報確認", "") %> </h3>
-<h3> <%= link_to("登録情報編集", "") %> </h3>
-<h3> <%= link_to("アカウント消去", "") %> </h3>
+
+<ul class="account-setting">
+    <li><%= link_to("登録情報確認", "") %></li><br>
+    <li><%= link_to("登録情報編集", "") %></li><br>
+    <li><%= link_to("アカウント消去", "") %></li><br>
+</ul>

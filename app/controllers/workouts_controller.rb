@@ -13,7 +13,7 @@ class WorkoutsController < ApplicationController
       level: flash[:level],
       date: params[:date]
     )
-    @workout_today = Workout.where(date: params[:date], user_id: @current_user.id)
+    @workouts_today = Workout.where(date: params[:date], user_id: @current_user.id)
     @exercises = Exercise.all
   end
 
@@ -60,21 +60,21 @@ class WorkoutsController < ApplicationController
   end
 
   def show
-    @workout = Workout.find(params[:id])
+    @workout = Workout.find(id: params[:id])
   end
 
   def calendar_year
 
     #カレンダーの表示月を取得。デフォルトは今月から1年前まで。
     if params[:date].blank?
-      @start_month = Date.today.beginning_of_month
+      @end_month = Date.today.end_of_month
     else
-      @start_month = Date.parse(params[:date] + "-01").beginning_of_month
+      @end_month = Date.parse(params[:date] + "-01").end_of_month
     end
-    puts "start_month: #{@start_month}"
+    puts "end_month: #{@end_month}"
 
     #1年間分のトレーニングを取得
-    @workouts = Workout.all
+    @workouts = Workout.where(date: (@end_month - 11.months)..@end_month )
   end
 
   def calendar_month
@@ -82,7 +82,7 @@ class WorkoutsController < ApplicationController
     @target_month = Date.parse(params[:date])
 
     #1ヶ月分のトレーニングを取得
-    @workouts_this_month = Workout.where(date: @target_month..@target_month.end_of_month, user_id: params[:id])
+    @workouts_this_month = Workout.where(date: @target_month.beginning_of_month..@target_month.end_of_month, user_id: params[:id])
 
     #1ヶ月分ののトレーニング消費カロリーを計算
     @calories_this_month = 0

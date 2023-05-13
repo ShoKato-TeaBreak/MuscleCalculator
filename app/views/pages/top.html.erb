@@ -1,11 +1,43 @@
 <div class="top">
+
+    <%= image_tag "hero-image", alt: "hero-image", class: "hero-image" %>
+
+    <h1>MuscleCalculatorへようこそ</h1>
     
-    <div class="top-image">
-        <%= image_tag "hero-image", alt: "hero-image", class: "hero-image" %>
+    <p class="text">
+          MucleCalculatorはマシントレーニングをはじめとした筋肉レーニングのカロリー計算をするアプリです。
+        マシントレーニングにはレッグプレス、チェストプレス、ラットプルダウンなど様々なトレーニング機器があります。
+        利用するマシンの種類やトレーニング重量、利用者様の体格などに応じて消費カロリーを算出することができます。
+        身長、体重、メールアドレスなど、会員登録後にサービスを利用できます。
+    </p>
+
+    <h2>アプリ機能の紹介</h2>
+    <p class="text">
+        アプリに搭載されている機能を一部紹介します。
+    </p>
+    <div class="block">
+        <h3>トレーニング記録機能</h3>
     </div>
 
-    <div class="main">
-        トップメニューにコンテンツ一覧を表示する
+    <div class="block">
+        <h3>カロリー計算機能</h3>
     </div>
+    
+    <div class="block">
+        <h3>トレーニングカレンダー機能</h3>
+    </div>
+
+    <% if @current_user.blank? %>
+        <h2>登録やログインこちらから</h2>
+        <div class="block">
+            <%= link_to "ログイン", "/users/sign_in", class: "button orange-gradient" %>
+            <%= link_to "新規登録", new_user_path, class: "button orange-gradient" %>
+        </div>
+    <% else %>
+        <h2>ログアウトはこちら</h2>
+        <div class="block">
+            <%= link_to "ログアウト", "/users/sign_out", class: "button orange-gradient" %>
+        </div>
+    <% end %>
 
 </div>
