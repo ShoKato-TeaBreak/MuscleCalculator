@@ -31,20 +31,22 @@
     <% end %>
 
     <h3>トレーニングカレンダー</h3>
-        <%= month_calendar events: @workouts_this_month do |date, workouts| %>
-            <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
-            <% if workouts.present? %>
-                <% calories_day = 0 %>
-                <% i = 0 %>
-                <% workouts.each do |workout| %>
-                    <% calories_day += workout.calories %>
-                    <% i += 1 %>
+        <div class="month-calendar">
+            <%= month_calendar events: @workouts_this_month do |date, workouts| %>
+                <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
+                <% if workouts.present? %>
+                    <% calories_day = 0 %>
+                    <% i = 0 %>
+                    <% workouts.each do |workout| %>
+                        <% calories_day += workout.calories %>
+                        <% i += 1 %>
+                    <% end %>
+                    <p class="calories-display"><%= calories_day.round %></p>
+                    <p class="calories-display">(kcal)</p>
                 <% end %>
-                <p class="calories-display"><%= calories_day.round %></p>
-                <p class="calories-display">(kcal)</p>
-            <% end %>
 
-        <% end %>
+            <% end %>
+        </div>
 
         <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year", class: "button red-gradient") %>
 

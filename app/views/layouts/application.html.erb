@@ -6,8 +6,9 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "calendar", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "font", "data-turbo-track": "reload", as: "style" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload", as: "style" %>
+    <%= stylesheet_link_tag "calendar", "data-turbo-track": "reload", as: "style" %>
     <%= javascript_importmap_tags %>
   </head>
 
@@ -19,11 +20,23 @@
       <% end %>
 
       <!-- モバイル表示用のハンバーガーメニュー -->
-      <div class="hamburger-menu mobile-only">
+      <div class="hamburger-button">
         <span></span>
         <span></span>
         <span></span>
+        <span class="hamburger-button-text">Menu</span>
         <!-- ここにハンバーガーメニューの項目を6個追加 -->
+      </div>
+      <div class="hamburger-menu-items">
+        <!-- ハンバーガーボタンを押した後に表示するアイテム -->
+        <ul>
+          <li class="hamburger-item">メニュー</li>
+          <li class="hamburger-item"><%= link_to "マイページ", user_path(@current_user) %></li>
+          <li class="hamburger-item"><%= link_to "新規投稿", new_workout_path %></li>
+          <li class="hamburger-item"><%= link_to "トレーニング記録", "/workouts/calendar/year" %></li>
+          <li class="hamburger-item"><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
+          <li class="hamburger-item"></li>
+        </ul>
       </div>
       
       <div class="clear"></div>

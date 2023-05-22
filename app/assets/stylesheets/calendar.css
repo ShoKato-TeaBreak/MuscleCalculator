@@ -8,21 +8,23 @@
 /* simple-calendarのデフォルトcssに追加したい部分を記述 */
 .simple-calendar .has-events{
     background-color: yellowgreen;
-  }
-  .simple-calendar .today{
-    background-color: rgb(250, 250, 98);
-  }
-  .simple-calendar .calendar-heading a{
-    display: none;
-  }
-  .simple-calendar table{
-    width: 100%;
-    margin: 0 auto;
-  }
-  .simple-calendar table .next-month, .simple-calendar table .prev-month{
-    background-color: #DDD;
-  }
-  
+}
+.simple-calendar .today{
+background-color: rgb(250, 250, 98);
+}
+.simple-calendar .calendar-heading a{
+display: none;
+}
+.simple-calendar table{
+width: 100%;
+margin: 0 auto;
+}
+.simple-calendar table .next-month, .simple-calendar table .prev-month{
+background-color: #DDD;
+}
+.month-calendar{
+    margin-top: 40px;
+} 
 
 
 
@@ -32,16 +34,16 @@
     max-width: 1200px;
 }
 .custom-yearly-calendar .custom-month-calendar{
-display: block;
-text-align: center;
-width: 25%;
-padding: 0 10px;
-font-size: 16px;
-height: 250px;
-float: left;
+    display: block;
+    text-align: center;
+    width: 25%;
+    padding: 0 10px;
+    font-size: 16px;
+    height: 250px;
+    float: left;
 }
 .custom-yearly-calendar .calendar-title{
-display: none;
+    display: none;
 }
 
 .calories-display{

@@ -69,7 +69,7 @@ class WorkoutsController < ApplicationController
     if params[:date].blank?
       @end_month = Date.today.end_of_month
     else
-      @end_month = Date.parse(params[:date] + "-01").end_of_month
+      @end_month = Date.parse(params[:date]).end_of_month
     end
     puts "end_month: #{@end_month}"
 

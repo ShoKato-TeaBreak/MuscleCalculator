@@ -25,5 +25,10 @@
 
         </div>
     <% end %>
+    
+    <div class="block center">
+      <%= link_to "1年前を表示", "/workouts/calendar/year?date=#{@end_month.last_year}", class: "mini-button" %>
+      <%= link_to "1年後を表示", "/workouts//calendar/year?date=#{@end_month.next_year}", class: "mini-button" %>
+    </div>
     <div class="clear"></div>
 </div>

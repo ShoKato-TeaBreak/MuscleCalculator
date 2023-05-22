@@ -26,25 +26,23 @@
     <% else %>
 
         <div class="field">
-            <p>トレーニング日: <%= params[:date] + "  " %><%= link_to("日付の変更", new_workout_path, class:"mini-button") %></p>
+            <p>トレーニング日: <%= params[:date] %><br>
+            <%= link_to("日付の変更", new_workout_path, class:"mini-button") %></p>
         </div>
 
+        <%#トレーニング項目の入力欄%>
         <% if params[:name].blank? %>
-
             <div class="field">
                 <p>投稿するトレーニング項目を選択してください</p>
                 <% @exercises.each do |exercise| %>
                     <%= link_to exercise.name, new_workout_path(name: exercise.name, date: params[:date]), class: "exercises-item" %>
                 <% end %>
             </div>
-
         <% else %>
-
             <div class="field">
-                <span>トレーニング項目: <%= params[:name] %></span>
+                <span>トレーニング項目: <%= params[:name] %></span><br>
                 <%= link_to("トレーニング項目の変更", new_workout_path(date: params[:date]), class:"mini-button") %>
             </div>
-
         <% end %>
         
         <div class="clear"></div>

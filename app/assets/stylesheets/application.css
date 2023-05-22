@@ -4,7 +4,6 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: serif, sans-serif, "ヒラギノ角ゴ ProN W6", "Meiryo";
 }
 html{
   background-color: #f8f4e6;
@@ -12,6 +11,9 @@ html{
 }
 .clear{
     clear: both;
+}
+.center{
+  text-align: center;
 }
 .error-message{
   margin-bottom: 50px;
@@ -55,6 +57,7 @@ html{
 .mini-button{
   font-size: 1rem;
   line-height: 1.2em;
+  text-decoration: none;
 
   border: 1px solid rgba(0, 0, 0, .5);
   border-radius: 0.5rem;
@@ -63,7 +66,6 @@ html{
   position: relative;
   display: inline-block;
 
-  margin-left: 15px;
   padding: 0.1rem 1.5rem;
 
   background: #f1e767;
@@ -124,7 +126,6 @@ html{
 
 /* 見出しのcss -----------------------------*/
 h1{
-  font-size: 28px;
   padding: 1rem 2rem;
   margin: 30px auto;
   -webkit-transform: skew(-15deg);
@@ -132,10 +133,8 @@ h1{
   color: #fff;
   background-image: -webkit-linear-gradient(left, #209cff 0%, #68e0cf 100%);
   background-image: linear-gradient(to right, #209cff 0%, #68e0cf 100%);
-
 }
 h2 {
-  font-size: 22px;
   position: relative;
   padding: 1rem .5rem;
   margin: 30px auto;
@@ -154,7 +153,6 @@ h2:after {
 }
 
 h3 {
-  font-size: 18px;
   position: relative;
   padding: 0.5rem;
   display: inline-block;
@@ -189,28 +187,89 @@ ul li{
 
 /* ヘッダー用のcss --------------------------------*/
 header{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
   width: 100%;
   height: 100px;
   max-width: 1300px;
+  min-width: 320px;
   padding: 0 10px;
   margin: auto;
   /* background-color: #f8f4e6; */
 }
 
 .logo{
-  float: left;
   object-fit: cover;
 }
+/* ハンバーガーメニューのcss---------------------- */
+.hamburger-button {
+  display: none;
+  cursor: pointer;
+  height: 30px;
+  width: 30px;
 
-.humburger-menu{
-  float: right;
-  width: 70%;
-  height: 100px;
-  color: black;
-  text-align: right;
-  line-height: 100px;
-  font-size: 18px;
+  margin-left: auto;
+
+  position: relative;
 }
+
+.hamburger-button span {
+  background-color: #333;
+  height: 2px;
+  left: 0;
+  position: absolute;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.hamburger-button span:nth-child(1) {
+  top: 0;
+}
+
+.hamburger-button span:nth-child(2) {
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.hamburger-button span:nth-child(3) {
+  bottom: 0;
+}
+.hamburger-button .hamburger-button-text {
+  background-color: #f8f4e6;
+  height: 8px;
+  bottom: -10px;
+  font-size: 8px;
+  line-height: 8px;
+  text-align: center;
+}
+
+.hamburger-button.active span:nth-child(1) {
+  transform: rotate(45deg) translate(10px, 10px);
+}
+.hamburger-button.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-button.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(10px, -10px);
+}
+
+.hamburger-menu-items{
+  display: none;
+  background-color: rgb(237, 251, 255);
+  
+  position: absolute;
+  top: 80px;
+
+  text-align: center;
+  width: 100vw;
+  z-index: 10;
+}
+.hamburger-item a{
+  text-decoration: none;
+}
+
 
 /* メインコンテンツ用のcss ------------------------------ */
 main{
@@ -262,7 +321,6 @@ main .sidebar-heading{
   margin-bottom: 20px;
 }
 
-
 /* スマホ対応用のcss ----------- */
 @media (max-width: 720px) {
   main{
@@ -271,12 +329,12 @@ main .sidebar-heading{
     margin: 0 auto;
   }
   header{
-    text-align: center;
+    justify-content: center;
     height: 80px;
   }
   .logo{
     height: 80px;
-    float: none;
+    text-align: center;
     display: inline-block;
   }
   .main-content{
@@ -286,6 +344,13 @@ main .sidebar-heading{
   }
   .sidebar{
     display: none;
+  }
+  .hamburger-button{
+    display: block;
+    text-align: right;
+  }
+  .hamburger-menu-items.show{
+    display: block;
   }
 }
 
