@@ -408,6 +408,10 @@ main .sidebar-heading{
 .account-setting{
   padding: 20px 0;
 }
+/* インプットフォームのcss--------------------------- */
+.input_form{
+  margin-left: 30px;
+}
 
 /* workouts/new.html.erb のcss-------------------- */
 .field{

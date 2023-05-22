@@ -31,7 +31,7 @@
         <!-- ハンバーガーボタンを押した後に表示するアイテム -->
         <ul>
           <li class="hamburger-item">メニュー</li>
-          <li class="hamburger-item"><%= link_to "マイページ", user_path(@current_user) %></li>
+          <li class="hamburger-item"><%= link_to "マイページ", "/users/mypage" %></li>
           <li class="hamburger-item"><%= link_to "新規投稿", new_workout_path %></li>
           <li class="hamburger-item"><%= link_to "トレーニング記録", "/workouts/calendar/year" %></li>
           <li class="hamburger-item"><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
@@ -53,7 +53,7 @@
     <!-- 画面下部のナビゲーション -->
     <nav class="bottom-nav">
       <% if @current_user %>
-        <%= link_to "マイページ", user_path(@current_user) %>
+        <%= link_to "マイページ", "/users/mypage" %>
         <%= link_to "新規投稿", new_workout_path %>
       <% else %>
         <%= link_to "ログイン", "/users/sign_in" %>
@@ -74,7 +74,7 @@
         <% if @current_user %>
           <ul>
             <li class="sidebar-item sidebar-heading">メニュー</li>
-            <li class="sidebar-item"><%= link_to "マイページ", user_path(@current_user) %></li>
+            <li class="sidebar-item"><%= link_to "マイページ", '/users/mypage' %></li>
             <li class="sidebar-item"><%= link_to "新規投稿", new_workout_path %></li>
             <li class="sidebar-item"><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
             <li class="sidebar-item"><%= link_to "トレーニング記録", "/workouts/calendar/year" %>

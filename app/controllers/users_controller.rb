@@ -10,7 +10,7 @@ class UsersController < ApplicationController
     if @user && @user.authenticate(params[:password])
       session[:user_id] = @user.id
       flash[:notice] = "ログインしました"
-      redirect_to user_path(@user.id)
+      redirect_to "/users/mypage"
     else
       flash[:email] = params[:email]
       flash[:error_message] = "メールアドレスまたはパスワードが間違っています"
@@ -51,7 +51,7 @@ class UsersController < ApplicationController
     if @user.save
       session[:user_id] = @user.id
       flash[:notice] = "ユーザー登録が完了しました"
-      redirect_to("/users/home")
+      redirect_to("/users/mypage")
     else
       flash[:name] = params[:user][:name]
       flash[:email] = params[:user][:email]
@@ -64,19 +64,19 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = User.find_by(id: params[:id])
+  def mypage
+    @user = User.find_by(id: @current_user.id)
     @workouts = Workout.where(user_id: @user.id).order(date: :desc)
     @workouts_today = Workout.where(date: Time.zone.now.all_day, user_id: @user.id)
     @workouts_this_month = Workout.where(user_id: @user.id, date: Time.zone.now.all_month)
 
-    # #今日のトレーニングのカロリーを計算
-    # @calories_today = 0
-    # if @workouts_today.present?
-    #   @workouts_today.each do |workout|
-    #     @calories_today += workout.calories
-    #   end
-    # end
+    #今日のトレーニングのカロリーを計算
+    @calories_today = 0
+    if @workouts_today.present?
+      @workouts_today.each do |workout|
+        @calories_today += workout.calories
+      end
+    end
 
     #今月のトレーニングのカロリーを計算
     @calories_this_month = 0
@@ -85,10 +85,13 @@ class UsersController < ApplicationController
         @calories_this_month += workout.calories
       end
     end
-
   end
 
-  def account
+
+  def show
+    @user = User.find_by(id: params[:id])
+    
+
   end
 
   def edit

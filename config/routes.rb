@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   get 'users/sign_in' => 'users#sign_in_form'#ユーザーログイン画面
   delete 'users/sign_out' => 'users#sign_out'#ユーザーログアウト処理
 
+  get 'users/mypage' => 'users#mypage'
+
   resources :users, only: [
     :new,      # ユーザの新規作成画面
     :create,   # ユーザの新規登録処理

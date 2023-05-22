@@ -1,59 +1,45 @@
-
-
-<h1><%= @current_user.name %>さんマイページ</h1>
-
-
-<h2>今日のトレーニング記録</h2>
-    <% if @workouts_today.blank? %>
-        <p>今日はまだトレーニングが記録されていません</p>
-    <% else %>
-        <% @workouts_today.each do |workout| %>
-            <span><%= workout.name %></span>
-            <span><%= workout.weight %>kg</span>
-            <span><%= workout.sets %>セット目</span>
-            <span><%= workout.reps %>回</span>
-            <span><%= workout.calories %>kcal</span>
-            <%= link_to("編集", edit_workout_path(workout)) %>
-            <%= link_to("削除", workout_path(workout), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %>
-        <% end %>
-    <% end %>
-
-    <div class="block">
-        <%= link_to("トレーニングを投稿する", new_workout_path(date: Time.now.strftime("%Y-%m-%d")), class: "button red-gradient") %>
-    </div>
-<h2>今月のトレーニング記録</h2>
-
-    <h3>今月の消費カロリー合計</h3>
-    <% if @workouts_this_month.blank? %>
-        <p>今月はまだトレーニングが記録されていません</p>
-    <% else %>
-        <p><%= @calories_this_month %>kcal</p>
-    <% end %>
-
-    <h3>トレーニングカレンダー</h3>
-        <div class="month-calendar">
-            <%= month_calendar events: @workouts_this_month do |date, workouts| %>
-                <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
-                <% if workouts.present? %>
-                    <% calories_day = 0 %>
-                    <% i = 0 %>
-                    <% workouts.each do |workout| %>
-                        <% calories_day += workout.calories %>
-                        <% i += 1 %>
-                    <% end %>
-                    <p class="calories-display"><%= calories_day.round %></p>
-                    <p class="calories-display">(kcal)</p>
-                <% end %>
-
-            <% end %>
+<div class="users_show">
+    <h1>ユーザー情報確認</h1>
+    
+    <%= form_with model: @user, method: :post, local: true, class: "input_form" do |form| %>
+        <div class="field">
+            <div class="field-label"><%= form.label :name, '名前' %></div>
+            <div class="field-form"><%= form.text_field :name, readonly: true %></div>
         </div>
 
-        <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year", class: "button red-gradient") %>
+        <div class="field">
+            <div class="field-label"><%= form.label :email, 'メールアドレス' %></div>
+            <div class="field-form"><%= form.text_field :email, readonly: true %></div>
+        </div>
 
-<h2>アカウント設定</h2>
+        <div class="field">
+            <div class="field-label"><%= form.label :height, '身長(cm)' %></div>
+            <div class="field-form"><%= form.number_field :height, step: 0.1, pattern: "\d{1,3}(\.\d{0,1})?", readonly: true %></div>
+        </div>
 
-<ul class="account-setting">
-    <li><%= link_to("登録情報確認", "") %></li><br>
-    <li><%= link_to("登録情報編集", "") %></li><br>
-    <li><%= link_to("アカウント消去", "") %></li><br>
-</ul>
+        <div class="field">
+            <div class="field-label"><%= form.label :weight, '体重(kg)' %></div>
+            <div class="field-form"><%= form.number_field :weight, step: 0.1, pattern: "\d{1,3}(\.\d{0,1})?", readonly: true %></div>
+        </div>
+
+        <div class="field">
+            <div class="field-label"><%= form.label :age, '年齢' %></div>
+            <div class="field-form"><%= form.number_field :age, min: 0, max:130, readonly: true %></div>
+        </div>
+
+        <div class="field">
+            <div class="field-label"><%= form.label :sex, '性別' %></div>
+            <div class="field-form"><%= form.text_field :sex, readonly: true %></div>
+        </div>
+
+        <div class="field">
+            <div class="field-label"><%= form.label :password, 'パスワード(8文字以上)' %></div>
+            <div class="field-form"><%= form.text_field :password, value: "**********", readonly: true %></div>
+            <p>(上記の文字数と実際のパスワードの文字数は無関係です)</p>
+        </div>
+
+        <%= link_to "登録内容変更はこちら", edit_user_path, class: "button orange-gradient" %>
+    
+    <% end %>
+
+</div>

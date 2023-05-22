@@ -5,7 +5,7 @@
         <p class="error_message"><%= flash[:error_message] %></p>
     <% end %>
 
-    <%= form_with url:"/users/sign_in", method: :post, local:true  do |form| %>
+    <%= form_with url:"/users/sign_in", method: :post, local:true, class: "input_form"  do |form| %>
 
         <div class="field">
             <div class="field-label"><%= form.label :email, 'メールアドレス' %></div>
@@ -18,7 +18,7 @@
         </div>
 
         <div class="actions">
-            <div class="button"><%= form.submit 'ログイン' %></div>
+            <%= form.submit 'ログイン', class: "button blue-gradient"%>
         </div>
     <% end %>
 </div>
