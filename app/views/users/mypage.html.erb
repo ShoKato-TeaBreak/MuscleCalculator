@@ -61,3 +61,8 @@
     <li><%= link_to("登録情報編集", edit_user_path(@user)) %></li><br>
     <li><%= link_to("アカウント消去", "") %></li><br>
 </ul>
+
+<h2>ログアウトはこちら</h2>
+<div class="block">
+    <%= link_to "ログアウト", "/users/sign_out", class: "button orange-gradient" %>
+</div>

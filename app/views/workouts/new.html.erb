@@ -3,7 +3,7 @@
     <h2>新しい投稿</h2>
 
     <% if flash[:error_message] %>
-        <ul class="error-message">
+        <ul class="error_messages">
             <% flash[:error_message].each do |attribute, message| %>
                 <% message.uniq.each do |display| %>
                     <li><%= display %></li>

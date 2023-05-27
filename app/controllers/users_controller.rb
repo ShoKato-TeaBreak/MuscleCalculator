@@ -90,11 +90,63 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
-    
-
   end
 
   def edit
+    @user = User.find_by(id: @current_user.id)
+  end
+
+  def update
+    @user = User.find_by(id: @current_user.id)
+    puts "送信された変更内容は下記です"
+    puts user_params;
+    if params[:user][:change_password] == "1"
+      if @user.authenticate(params[:user][:current_password])
+        if params[:user][:password] == params[:user][:password_confirmation]
+          
+          # 新しいパスワードが空のまま送信されていないかを確認
+          if params[:user][:password].present?
+            # パスワードを含めたユーザ情報を更新
+            if @user.update(user_params.except(:current_password, :change_password, :password_confirmation))
+              flash[:notice] = "パスワードの変更をしました。"
+              redirect_to @user;
+            else
+              @user.errors.add(:password, "パスワードの更新に失敗しました")
+              flash[:error_message] = @user.errors.messages;
+              render :edit;
+            end
+
+          # 空で送信されていた場合はメッセージを表示
+          else
+            @user.attributes = user_params.except(:current_password, :change_password, :password, :password_confirmation)
+            @user.errors.add(:password, "新しいパスワードが入力されていません")
+            flash[:error_message] = @user.errors.messages;
+            render :edit;
+          end
+        else
+          @user.attributes = user_params.except(:current_password, :change_password, :password, :password_confirmation)
+          @user.errors.add(:password, "新しいパスワードと確認用パスワードが一致しません")
+          flash[:error_message] = @user.errors.messages;
+          render :edit;
+        end
+      else
+        @user.attributes = user_params.except(:current_password, :change_password, :password, :password_confirmation)
+        @user.errors.add(:password, "現在のパスワードが間違っています")
+        flash[:error_message] = @user.errors.messages;
+        render :edit
+      end
+    else
+      if @user.update(user_params.except(:current_password, :change_password, :password, :password_confirmation))
+        redirect_to @user, notice: '変更を保存しました'
+      else
+        flash[:error_message] = @user.errors.messages;
+        render :edit;
+      end
+    end
+  end
+  
+  private def user_params
+    params.require(:user).permit(:name, :email, :height, :weight, :age, :sex, :current_password, :change_password, :password, :password_confirmation)
   end
 
   def delete

@@ -2,7 +2,7 @@
     <h1>ログイン</h1>
     
     <% if flash[:error_message] %>
-        <p class="error_message"><%= flash[:error_message] %></p>
+        <p class="error_messages"><%= flash[:error_message] %></p>
     <% end %>
 
     <%= form_with url:"/users/sign_in", method: :post, local:true, class: "input_form"  do |form| %>

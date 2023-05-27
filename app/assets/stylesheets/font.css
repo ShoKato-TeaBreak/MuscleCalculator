@@ -15,6 +15,9 @@ h2{
 h3{
     font-size: 18px;
 }
+.error_messages{
+    font-size: 16px;
+}
 
 @media (max-width: 720px){
     html{
@@ -28,5 +31,8 @@ h3{
     }
     h3{
         font-size: 18px;
+    }
+    .error_messages{
+        font-size: 14px;
     }
 }
