@@ -59,7 +59,7 @@
 <ul class="account-setting">
     <li><%= link_to("登録情報確認", user_path(@user)) %></li><br>
     <li><%= link_to("登録情報編集", edit_user_path(@user)) %></li><br>
-    <li><%= link_to("アカウント消去", "") %></li><br>
+    <li><%= link_to("アカウント削除", user_path(@user, referrer: request.original_url), data: { turbo_confirm: "本当アカウントのを削除しますか？\nこの操作を行うと登録されている全てのデータが消去され、復元することはできません。\n実行しますか？", turbo_method: "delete" }) %></li><br>
 </ul>
 
 <h2>ログアウトはこちら</h2>

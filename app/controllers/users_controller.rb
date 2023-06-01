@@ -149,7 +149,10 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :height, :weight, :age, :sex, :current_password, :change_password, :password, :password_confirmation)
   end
 
-  def delete
+  def destroy
+    puts "アカウント消去アクションに入りました。"
+    flash[:notice] = "アカウントを消去しました"
+    redirect_to "/"
   end
 
 end

@@ -3,18 +3,19 @@
     <p>投稿がありません</p>
 <% else %>
     <% @workouts.each do |workout| %>
-        <div class="record">
-            <span>トレーニング項目: <%= workout.name %></span>
-            <span>セット数: <%= workout.sets %></span>
-            <span>重量: <%= workout.weight %>kg</span>
-            <span>回数: <%= workout.reps %>回</span>
-            <span>トレーニング速度: <%= workout.speed %>秒</span>
-            <span>トレーニング強度: <%= workout.level %></span>
-            <span>消費カロリー: <%= workout.calories %></span>
+        <div class="item-container">
+            <p><span class="item-name">セット</span><span class="item-value"><%= workout.sets %>セット目</span></p>
+            <p><span class="item-name">重量</span><span class="item-value"><%= workout.weight %>kg</span></p>
+            <p><span class="item-name">回数</span><span class="item-value"><%= workout.reps %>回</span></p>
+            <p><span class="item-name">速度</span><span class="item-value"><%= workout.speed %>秒</span></p>
+            <p><span class="item-name">強度</span><span class="item-value"><%= workout.level %></span></p>
+            <p><span class="item-name">カロリー</span><span class="item-value"><%= workout.calories %>kcal</span></p>
 
-            <%= link_to("投稿詳細", workout_path(workout)) %>
-            <%= link_to("編集", edit_workout_path(workout)) %>
-            <%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %>
+            <p class="link_button">
+                <span><%= link_to("詳細", workout_path(workout, referrer: request.original_url)) %>
+                <span><%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %></span>
+                <span><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span>
+            </p>
         </div>
     <% end %>
 <% end %>

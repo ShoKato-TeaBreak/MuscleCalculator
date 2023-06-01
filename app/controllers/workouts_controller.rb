@@ -13,8 +13,15 @@ class WorkoutsController < ApplicationController
       level: flash[:level],
       date: params[:date]
     )
-    @workouts_today = Workout.where(date: params[:date], user_id: @current_user.id)
+    @workouts_this_day = Workout.where(date: params[:date], user_id: @current_user.id)
     @exercises = Exercise.all
+
+    @calories_this_day = 0
+    if @workouts_this_day.present?
+      @workouts_this_day.each do |workout|
+        @calories_this_day += workout.calories
+      end
+    end
   end
 
   def create
@@ -60,7 +67,7 @@ class WorkoutsController < ApplicationController
   end
 
   def show
-    @workout = Workout.find(id: params[:id])
+    @workout = Workout.find(params[:id])
   end
 
   def calendar_year
@@ -80,7 +87,6 @@ class WorkoutsController < ApplicationController
   def calendar_month
     #カレンダーの表示月を取得。
     @target_month = Date.parse(params[:date])
-
     #1ヶ月分のトレーニングを取得
     @workouts_this_month = Workout.where(date: @target_month.beginning_of_month..@target_month.end_of_month, user_id: params[:id])
 
@@ -96,6 +102,8 @@ class WorkoutsController < ApplicationController
   def calendar_day
     #カレンダーの表示日を取得。
     @target_day = Date.parse(params[:date])
+    #トレーニング項目の取得をする
+    @exercises = Exercise.all
     
     #1日分のトレーニングを取得
     @workouts_this_day = Workout.where(date: @target_day, user_id: params[:id])

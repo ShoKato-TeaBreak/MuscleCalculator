@@ -39,4 +39,14 @@
 
     <%= link_to "登録内容変更はこちら", edit_user_path, class: "button orange-gradient" %>
 
+    <h2>アカウント消去</h2>
+
+    <p class="text">
+        下記のアカウント消去ボタンを押すとアカウント消去をすることができます。
+        アカウント消去をした場合、登録されているアカウントの情報やトレーニングデータなども消去され、それらを復元することはできなくなります。
+        上記事項を確認の上アカウント消去をご希望される場合は、「アカウント消去」ボタンを押してください。
+    </p>
+
+    <%= link_to("アカウント削除", user_path(@user, referrer: request.original_url), data: { turbo_confirm: "本当アカウントのを削除しますか？\nこの操作を行うと登録されている全てのデータが消去され、復元することはできません。\n実行しますか？", turbo_method: "delete" }, class: "button red-gradient") %>
+
 </div>
