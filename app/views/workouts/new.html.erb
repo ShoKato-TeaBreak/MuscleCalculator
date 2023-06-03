@@ -16,8 +16,8 @@
 
         <%= form_with url: new_workout_path, method: :get, local: true do |form| %>
             <div class="field">
-                <%= form.label :date, "トレーニング日を入力してください" %><br>
-                <%= form.date_field :date, value: Time.now.strftime("%Y-%m-%d") %>
+                <h3><%= form.label :date, "トレーニング日を入力してください" %><br></h3><br>
+                <%= form.date_field :date, value: Time.now.strftime("%Y-%m-%d"), class: "date-field" %>
 
                 <%= form.submit value: "日付を決定", class: "mini-button" %>
             </div>
@@ -33,7 +33,7 @@
         <%#トレーニング項目の入力欄%>
         <% if params[:name].blank? %>
             <div class="field">
-                <p>投稿するトレーニング項目を選択してください</p>
+                <h3><p>投稿するトレーニング項目を選択してください</p></h3>
                 <div class="exercises">
                     <% @exercises.each do |exercise| %>
                         <%= link_to exercise.name, new_workout_path(name: exercise.name, date: params[:date]), class: "exercises-item red-gradient" %>
@@ -107,6 +107,8 @@
         <% if @workouts_this_day.blank? %>
             <p>この日はまだトレーニングは投稿されていません</p>
         <% else %>
+            <h3>この日の消費カロリー合計</h3>
+            <p><%= @calories_this_day %>(kcal)</p>
             <% @exercises.each do |exercise| %>
                 <% workouts_this_exercise = @workouts_this_day.where(name: exercise.name) %>
 

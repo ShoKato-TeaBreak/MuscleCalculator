@@ -1,68 +1,59 @@
+<div class="mypage">
+    <h1><%= @current_user.name %>さんマイページ</h1>
 
 
-<h1><%= @current_user.name %>さんマイページ</h1>
+    <h2>今日のトレーニング記録</h2>
+        <% if @workouts_today.blank? %>
+            <p>今日はまだトレーニングが記録されていません</p>
+        <% else %>
+            <h3>今日の消費カロリー</h3>
+            <p><%= "#{@calories_today} kcal" %></p>
 
-
-<h2>今日のトレーニング記録</h2>
-    <% if @workouts_today.blank? %>
-        <p>今日はまだトレーニングが記録されていません</p>
-    <% else %>
-        <h3>今日の消費カロリー</h3>
-        <p><%= "#{@calories_today} kcal" %></p>
-
-        <h3>投稿内容</h3><br>
-        <% @workouts_today.each do |workout| %>
-            <span><%= workout.name %></span>
-            <span><%= workout.weight %>kg</span>
-            <span><%= workout.sets %>セット目</span>
-            <span><%= workout.reps %>回</span>
-            <span><%= workout.calories %>kcal</span>
-            <%= link_to("編集", edit_workout_path(workout)) %>
-            <%= link_to("削除", workout_path(workout), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %>
+            <%= link_to "今日のトレーニング記録を閲覧", "/workouts/calendar/day/#{Date.today}", class: "button red-gradient" %>
         <% end %>
-    <% end %>
 
-    <div class="block">
-        <%= link_to("トレーニングを投稿する", new_workout_path(date: Time.now.strftime("%Y-%m-%d")), class: "button red-gradient") %>
-    </div>
-<h2>今月のトレーニング記録</h2>
-
-    <h3>今月の消費カロリー合計</h3>
-    <% if @workouts_this_month.blank? %>
-        <p>今月はまだトレーニングが記録されていません</p>
-    <% else %>
-        <p><%= @calories_this_month %>kcal</p>
-    <% end %>
-
-    <h3>トレーニングカレンダー</h3>
-        <div class="month-calendar">
-            <%= month_calendar events: @workouts_this_month do |date, workouts| %>
-                <p><%= link_to(date.day, "/workouts/calendar/day/#{@current_user.id}/#{date}") %></p>
-                <% if workouts.present? %>
-                    <% calories_day = 0 %>
-                    <% i = 0 %>
-                    <% workouts.each do |workout| %>
-                        <% calories_day += workout.calories %>
-                        <% i += 1 %>
-                    <% end %>
-                    <p class="calories-display"><%= calories_day.round %></p>
-                    <p class="calories-display">(kcal)</p>
-                <% end %>
-
-            <% end %>
+        <div class="block">
+            <%= link_to("トレーニングを投稿する", new_workout_path(date: Time.now.strftime("%Y-%m-%d")), class: "button red-gradient") %>
         </div>
+    <h2>今月のトレーニング記録</h2>
 
-        <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year", class: "button red-gradient") %>
+        <h3>今月の消費カロリー合計</h3>
+        <% if @workouts_this_month.blank? %>
+            <p>今月はまだトレーニングが記録されていません</p>
+        <% else %>
+            <p><%= @calories_this_month %>kcal</p>
+        <% end %>
 
-<h2>アカウント設定</h2>
+        <h3>今月のトレーニングカレンダー</h3><br>
+            <div class="month-calendar">
+                <%= month_calendar events: @workouts_this_month do |date, workouts| %>
+                    <p><%= link_to(date.day, "/workouts/calendar/day/#{date}") %></p>
+                    <% if workouts.present? %>
+                        <% calories_day = 0 %>
+                        <% i = 0 %>
+                        <% workouts.each do |workout| %>
+                            <% calories_day += workout.calories %>
+                            <% i += 1 %>
+                        <% end %>
+                        <p class="calories-display"><%= calories_day.round %></p>
+                        <p class="calories-display">(kcal)</p>
+                    <% end %>
 
-<ul class="account-setting">
-    <li><%= link_to("登録情報確認", user_path(@user)) %></li><br>
-    <li><%= link_to("登録情報編集", edit_user_path(@user)) %></li><br>
-    <li><%= link_to("アカウント削除", user_path(@user, referrer: request.original_url), data: { turbo_confirm: "本当アカウントのを削除しますか？\nこの操作を行うと登録されている全てのデータが消去され、復元することはできません。\n実行しますか？", turbo_method: "delete" }) %></li><br>
-</ul>
+                <% end %>
+            </div>
 
-<h2>ログアウトはこちら</h2>
-<div class="block">
-    <%= link_to "ログアウト", "/users/sign_out", class: "button orange-gradient" %>
+            <%= link_to("他の月のトレーニング履歴はこちら", "/workouts/calendar/year", class: "button red-gradient") %>
+
+    <h2>アカウント設定</h2>
+
+    <ul class="account-setting">
+        <li><%= link_to("登録情報確認", user_path(@user)) %></li><br>
+        <li><%= link_to("登録情報編集", edit_user_path(@user)) %></li><br>
+        <li><%= link_to("アカウント削除", user_path(@user, referrer: request.original_url), data: { turbo_confirm: "本当アカウントのを削除しますか？\nこの操作を行うと登録されている全てのデータが消去され、復元することはできません。\n実行しますか？", turbo_method: "delete" }) %></li><br>
+    </ul>
+
+    <h2>ログアウトはこちら</h2>
+    <div class="block">
+        <%= link_to "ログアウト", "/users/sign_out", class: "button orange-gradient" %>
+    </div>
 </div>

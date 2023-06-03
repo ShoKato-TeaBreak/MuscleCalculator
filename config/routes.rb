@@ -24,8 +24,8 @@ Rails.application.routes.draw do
   ]
 
   get 'workouts/calendar/year' => 'workouts#calendar_year'
-  get 'workouts/calendar/month/:id/:date' => 'workouts#calendar_month'
-  get 'workouts/calendar/day/:id/:date' => 'workouts#calendar_day'
+  get 'workouts/calendar/month/:date' => 'workouts#calendar_month'
+  get 'workouts/calendar/day/:date' => 'workouts#calendar_day'
 
   resources :workouts, only: [
     :index,#ユーザのワークアウト一覧画面

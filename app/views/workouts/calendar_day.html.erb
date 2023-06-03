@@ -1,36 +1,43 @@
-<h1><%= "#{@target_day.year}年#{@target_day.month}月#{@target_day.day}日" %>のトレーニング記録</h1>
-<% if @workouts_this_day.blank? %>
-    <h2>この日のトレーニング履歴は記録されていません。</h2>
-<% else %>
-    <h2>この日の消費カロリー合計</h2>
-    <p><%= @calories_this_day %>(kcal)</p>
-    
-    <h2>マシントレーニング</h2>
-    <% @exercises.each do |exercise| %>
-        <% workouts_this_exercise = @workouts_this_day.where(name: exercise.name) %>
+<div class="calendar_day">
+    <h1><%= "#{@target_day.year}年#{@target_day.month}月#{@target_day.day}日" %>のトレーニング記録</h1>
+    <% if @workouts_this_day.blank? %>
+        <h2>この日のトレーニング履歴は記録されていません。</h2>
+        <%= link_to "トレーニングを投稿をする", new_workout_path(date: params[:date]), class: "button blue-gradient" %>
+    <% else %>
+        <h2>この日の消費カロリー合計</h2>
+        <p><%= @calories_this_day %>(kcal)</p>
+        <%= link_to "トレーニングを投稿をする", new_workout_path(date: params[:date]), class: "button blue-gradient" %>
+        
+        <h2>マシントレーニング</h2>
+        <% @exercises.each do |exercise| %>
+            <% workouts_this_exercise = @workouts_this_day.where(name: exercise.name) %>
 
-        <% if workouts_this_exercise.any? %>
-            <div class="exercise">
-                <div class="block">
-                    <h3><%= exercise.name %></h3>
-                </div>
-                <% workouts_this_exercise.each do |workout| %>
-                    <div class="item-container">
-                        <p><span class="item-name">セット</span><span class="item-value"><%= workout.sets %>セット目</span></p>
-                        <p><span class="item-name">重量</span><span class="item-value"><%= workout.weight %>kg</span></p>
-                        <p><span class="item-name">回数</span><span class="item-value"><%= workout.reps %>回</span></p>
-                        <p><span class="item-name">速度</span><span class="item-value"><%= workout.speed %>秒</span></p>
-                        <p><span class="item-name">強度</span><span class="item-value"><%= workout.level %></span></p>
-                        <p><span class="item-name">カロリー</span><span class="item-value"><%= workout.calories %>kcal</span></p>
-
-                        <p class="link_button">
-                            <span><%= link_to("詳細", workout_path(workout, referrer: request.original_url)) %>
-                            <span><%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %></span>
-                            <span><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span>
-                        </p>
+            <% if workouts_this_exercise.any? %>
+                <div class="exercise">
+                    <div class="block">
+                        <h3><%= exercise.name %></h3>
                     </div>
-                <% end %>
-            </div>
+                    <% workouts_this_exercise.each do |workout| %>
+                        <div class="item-container">
+                            <p><span class="item-name">セット</span><span class="item-value"><%= workout.sets %>セット目</span></p>
+                            <p><span class="item-name">重量</span><span class="item-value"><%= workout.weight %>kg</span></p>
+                            <p><span class="item-name">回数</span><span class="item-value"><%= workout.reps %>回</span></p>
+                            <p><span class="item-name">速度</span><span class="item-value"><%= workout.speed %>秒</span></p>
+                            <p><span class="item-name">強度</span><span class="item-value"><%= workout.level %></span></p>
+                            <p><span class="item-name">カロリー</span><span class="item-value"><%= workout.calories %>kcal</span></p>
+
+                            <p class="link_button">
+                                <span><%= link_to("詳細", workout_path(workout, referrer: request.original_url)) %>
+                                <span><%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %></span>
+                                <span><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span>
+                            </p>
+                        </div>
+                    <% end %>
+                </div>
+            <% end %>
         <% end %>
     <% end %>
-<% end %>
+
+    <%= link_to "月間カレンダーへ戻る", "/workouts/calendar/month/#{params[:date]}", class: "button orange-gradient" %>
+    <%= link_to "年間カレンダーへ戻る", "/workouts//calendar/year", class: "button orange-gradient" %>
+</div>

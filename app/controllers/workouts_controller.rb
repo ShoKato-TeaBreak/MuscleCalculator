@@ -22,6 +22,7 @@ class WorkoutsController < ApplicationController
         @calories_this_day += workout.calories
       end
     end
+    @calories_this_day = @calories_this_day.round(3)
   end
 
   def create
@@ -81,14 +82,14 @@ class WorkoutsController < ApplicationController
     puts "end_month: #{@end_month}"
 
     #1年間分のトレーニングを取得
-    @workouts = Workout.where(date: (@end_month - 11.months)..@end_month )
+    @workouts = Workout.where(date: (@end_month - 11.months)..@end_month, user_id: @current_user.id )
   end
 
   def calendar_month
     #カレンダーの表示月を取得。
     @target_month = Date.parse(params[:date])
     #1ヶ月分のトレーニングを取得
-    @workouts_this_month = Workout.where(date: @target_month.beginning_of_month..@target_month.end_of_month, user_id: params[:id])
+    @workouts_this_month = Workout.where(date: @target_month.beginning_of_month..@target_month.end_of_month, user_id: @current_user.id)
 
     #1ヶ月分ののトレーニング消費カロリーを計算
     @calories_this_month = 0
@@ -97,6 +98,7 @@ class WorkoutsController < ApplicationController
         @calories_this_month += workout.calories
       end
     end
+    @calories_this_month = @calories_this_month.round(3)
   end
 
   def calendar_day
@@ -106,7 +108,7 @@ class WorkoutsController < ApplicationController
     @exercises = Exercise.all
     
     #1日分のトレーニングを取得
-    @workouts_this_day = Workout.where(date: @target_day, user_id: params[:id])
+    @workouts_this_day = Workout.where(date: @target_day, user_id: @current_user.id)
 
     #1日分ののトレーニング消費カロリーを計算
     @calories_this_day = 0
@@ -115,6 +117,7 @@ class WorkoutsController < ApplicationController
         @calories_this_day += workout.calories
       end
     end
+    @calories_this_day = @calories_this_day.round(3)
   end
 
 
@@ -168,7 +171,7 @@ class WorkoutsController < ApplicationController
     puts "workout: #{params[:id]}"
     @workout.destroy
     flash[:notice] = "トレーニングを削除しました"
-    redirect_to determine_redirect_path #呼び出し元のURLによってリダイレクト先を変更
+    redirect_to "/users/mypage"
   end
 
   #呼び出し元のURLによってリダイレクト先を変更

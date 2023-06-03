@@ -77,6 +77,7 @@ class UsersController < ApplicationController
         @calories_today += workout.calories
       end
     end
+    @calories_today = @calories_today.round(3);
 
     #今月のトレーニングのカロリーを計算
     @calories_this_month = 0
@@ -85,6 +86,7 @@ class UsersController < ApplicationController
         @calories_this_month += workout.calories
       end
     end
+    @calories_this_month = @calories_this_month.round(3);
   end
 
 

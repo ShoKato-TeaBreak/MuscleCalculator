@@ -24,7 +24,13 @@ background-color: #DDD;
 }
 .month-calendar{
     margin-top: 40px;
-} 
+}
+.mypage .month-calendar{
+    margin-top: 0;
+}
+.calendar_month .month-calendar{
+    margin-top: 0;
+}
 
 
 
