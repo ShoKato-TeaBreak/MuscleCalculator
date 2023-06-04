@@ -18,6 +18,6 @@
 </div>
 
 <div>
+    <%= link_to("日間トレーニング記録へ", "/workouts/calendar/day/#{@workout.date}", class: "button red-gradient") %><br>
     <%= link_to("新規投稿ページへ", new_workout_path(date: @workout.date), class: "button red-gradient") %>
-    <%= link_to("月間トレーニングページへ", "/workouts/calendar/month/#{@workout.date}", class: "button red-gradient") %>
 </div>

@@ -1,4 +1,37 @@
 class WorkoutsController < ApplicationController
+
+  #以下3つはcreateアクションとupdateアクションで利用する共通処理を関数化したもの---------------
+  
+  #入力されたトレーニング速度(quick, normal, slow)に対して、それぞれ(2秒,3秒,5秒)返す関数
+  def get_seconds
+  end
+
+  #入力されたトレーニング強度(hight,middle,low)に応じてエクササイズのMets値を取得するメソッド
+  def get_exercise_mets(exercise_name, workout_level)
+    exercise = Exercise.find_by(name: exercise_name)
+    puts "exercise: #{exercise.inspect}"
+    #選択された運動強度によってmets値を変更
+    case workout_level
+    when 'high'
+      return exercise.mets_high
+    when 'low'
+      return exercise.mets_low
+    else
+      return exercise.mets_middle
+    end
+  end
+
+  #カロリー計算をする関数
+  def calculate_calories(mets, user_id, reps, speed)
+
+    #ユーザーの体重を取得
+    weight = User.find_by(id: user_id).weight
+    #トレーニングのカロリーを計算
+    calories = mets * weight * ((reps * speed) / 3600.0) * 1.05
+  end
+
+  #-----------------------------------------------------------------------------------
+
   def index
     @workouts = Workout.all
   end
@@ -22,26 +55,15 @@ class WorkoutsController < ApplicationController
         @calories_this_day += workout.calories
       end
     end
-    @calories_this_day = @calories_this_day.round(3)
+    @calories_this_day = @calories_this_day.round(2)
   end
 
   def create
-    exercise = Exercise.find_by(name: params[:workout][:name])
-    puts "exercise: #{exercise.inspect}"
-    #選択された運動強度によってmets値を変更
-    case params[:workout][:level]
-    when 'high'
-      mets = exercise.mets_high
-    when 'low'
-      mets = exercise.mets_low
-    else
-      mets = exercise.mets_middle
-    end
-
-    #ユーザーの体重を取得
-    weight = User.find_by(id: @current_user.id).weight
-    #トレーニングのカロリーを計算
-    calories = mets * weight * ((params[:workout][:reps].to_i * params[:workout][:speed].to_i) / 3600.0) * 1.05
+    
+    #運動の種類と運動強度に応じてmets値を取得する
+    mets = get_exercise_mets(params[:workout][:name], params[:workout][:level])
+    #caluculate_calories関数にパラメータとしてメッツ値、ユーザーID、回数、トレーニング速度を渡して消費カロリーの計算をする
+    calories = calculate_calories(mets, @current_user.id, params[:workout][:reps].to_i, params[:workout][:speed].to_i)
 
     @workout = Workout.new(
       user_id: @current_user.id,
@@ -52,7 +74,7 @@ class WorkoutsController < ApplicationController
       reps: params[:workout][:reps],
       speed: params[:workout][:speed],
       level: params[:workout][:level],
-      calories: calories.round(3)
+      calories: calories.round(2)
     )
     if @workout.save
       flash[:notice] = "トレーニングを記録しました"
@@ -98,7 +120,7 @@ class WorkoutsController < ApplicationController
         @calories_this_month += workout.calories
       end
     end
-    @calories_this_month = @calories_this_month.round(3)
+    @calories_this_month = @calories_this_month.round(2)
   end
 
   def calendar_day
@@ -117,7 +139,7 @@ class WorkoutsController < ApplicationController
         @calories_this_day += workout.calories
       end
     end
-    @calories_this_day = @calories_this_day.round(3)
+    @calories_this_day = @calories_this_day.round(2)
   end
 
 
@@ -128,22 +150,11 @@ class WorkoutsController < ApplicationController
 
   def update
     @workout = Workout.find(params[:id])
-    exercise = Exercise.find_by(name: params[:workout][:name])
-
-    #選択された運動強度によってmets値を変更
-    case params[:workout][:level]
-    when 'high'
-      mets = exercise.mets_high
-    when 'low'
-      mets = exercise.mets_low
-    else
-      mets = exercise.mets_middle
-    end
-
-    #ユーザーの体重を取得
-    weight = User.find_by(id: @current_user.id).weight
-    #トレーニングのカロリーを計算
-    calories = mets * weight * ((params[:workout][:reps].to_i * params[:workout][:speed].to_i) / 3600.0) * 1.05
+    
+    #運動の種類と運動強度に応じてmets値を取得する
+    mets = get_exercise_mets(params[:workout][:name], params[:workout][:level])
+    #caluculate_calories関数にパラメータとしてメッツ値、ユーザーID、回数、トレーニング速度を渡して消費カロリーの計算をする
+    calories = calculate_calories(mets, @current_user.id, params[:workout][:reps].to_i, params[:workout][:speed].to_i)
 
     if @workout.update(
       user_id: @current_user.id,
@@ -154,7 +165,7 @@ class WorkoutsController < ApplicationController
       reps: params[:workout][:reps],
       speed: params[:workout][:speed],
       level: params[:workout][:level],
-      calories: calories.round(3)
+      calories: calories.round(2)
     )
       flash[:notice] = "トレーニングを更新しました"
       redirect_to workout_path
@@ -175,12 +186,12 @@ class WorkoutsController < ApplicationController
   end
 
   #呼び出し元のURLによってリダイレクト先を変更
-  def determine_redirect_path
-    referrer = params[:referrer]
-    if referrer.include?(workout_path)#呼び出し元がshowアクションの場合は、indexアクションにリダイレクト
-      workouts_path
-    else
-      referrer
-    end
-  end
+  # def determine_redirect_path
+  #   referrer = params[:referrer]
+  #   if referrer.include?(workout_path)#呼び出し元がshowアクションの場合は、indexアクションにリダイレクト
+  #     workouts_path
+  #   else
+  #     referrer
+  #   end
+  # end
 end

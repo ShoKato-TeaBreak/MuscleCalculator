@@ -12,7 +12,7 @@ class Workout < ApplicationRecord
     # belongs_to :exercise
 
     def start_time
-        date
-      end
+      date
+    end
 
 end

@@ -2,11 +2,9 @@
     <h1><%= "#{@target_day.year}年#{@target_day.month}月#{@target_day.day}日" %>のトレーニング記録</h1>
     <% if @workouts_this_day.blank? %>
         <h2>この日のトレーニング履歴は記録されていません。</h2>
-        <%= link_to "トレーニングを投稿をする", new_workout_path(date: params[:date]), class: "button blue-gradient" %>
     <% else %>
         <h2>この日の消費カロリー合計</h2>
         <p><%= @calories_this_day %>(kcal)</p>
-        <%= link_to "トレーニングを投稿をする", new_workout_path(date: params[:date]), class: "button blue-gradient" %>
         
         <h2>マシントレーニング</h2>
         <% @exercises.each do |exercise| %>
@@ -38,6 +36,7 @@
         <% end %>
     <% end %>
 
-    <%= link_to "月間カレンダーへ戻る", "/workouts/calendar/month/#{params[:date]}", class: "button orange-gradient" %>
-    <%= link_to "年間カレンダーへ戻る", "/workouts//calendar/year", class: "button orange-gradient" %>
+    <%= link_to "トレーニングを投稿画面へ", new_workout_path(date: params[:date]), class: "button blue-gradient" %><br>
+    <%= link_to "年間カレンダーへ", "/workouts//calendar/year", class: "button orange-gradient" %>
+    <%= link_to "月間カレンダーへ", "/workouts/calendar/month/#{params[:date]}", class: "button orange-gradient" %>
 </div>
