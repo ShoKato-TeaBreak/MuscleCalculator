@@ -11,7 +11,7 @@
         <h3>カレンダー</h3><br>
         <div class='month-calendar'>
             <%= month_calendar(attribute: :date, start_date: @target_month, events: @workouts_this_month) do |date, workouts| %>
-                <p><%= link_to(date.day, "/workouts/calendar/day/#{params[:id]}/#{date}") %></p>
+                <p><%= link_to(date.day, "/workouts/calendar/day/#{date}") %></p>
                 <% if workouts.present? %>
                     <% calories_day = 0 %>
                     <% i = 0 %>

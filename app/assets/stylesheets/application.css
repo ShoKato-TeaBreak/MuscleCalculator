@@ -428,15 +428,17 @@ main .sidebar-heading{
 .date-field{
   font-size: 1rem;
 }
-.workouts-new a{
+.workouts_new a{
   text-decoration: none;
 }
-
-.workouts-new .exercises{
+.workouts_new select, .workouts_edit select{
+  font-size: 1rem;
+}
+.workouts_new .exercises{
   display: flex;
   flex-wrap: wrap;
 }
-.workouts-new .exercises .exercises-item{
+.workouts_new .exercises .exercises-item{
   display: flex;
   justify-content: center;
   align-items: center;

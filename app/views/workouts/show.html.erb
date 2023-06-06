@@ -6,18 +6,18 @@
         <p><span class="item-name">セット</span><span class="item-value"><%= @workout.sets %>セット目</span></p>
         <p><span class="item-name">重量</span><span class="item-value"><%= @workout.weight %>kg</span></p>
         <p><span class="item-name">回数</span><span class="item-value"><%= @workout.reps %>回</span></p>
-        <p><span class="item-name">トレーニング速度</span><span class="item-value"><%= @workout.speed %>秒</span></p>
+        <p><span class="item-name">トレーニング速度</span><span class="item-value"><%= @workout.speed %></span></p>
         <p><span class="item-name">トレーニング強度</span><span class="item-value"><%= @workout.level %></span></p>
         <p><span class="item-name">消費カロリー</span><span class="item-value"><%= @workout.calories %>kcal</span></p>
 
         <p class="link_button">
             <span><%= link_to("編集", edit_workout_path(@workout, referrer: request.original_url)) %></span>
-            <span><%= link_to("削除", workout_path(@workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span>
+            <span><%= link_to("削除", workout_path(@workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？\n実行後、この操作は復元することができず、データは完全に消去されます。", turbo_method: "delete" }) %></span>
         </p>
     </div>
 </div>
 
 <div>
-    <%= link_to("日間トレーニング記録へ", "/workouts/calendar/day/#{@workout.date}", class: "button red-gradient") %><br>
+    <%= link_to("この日のトレーニング記録一覧", "/workouts/calendar/day/#{@workout.date}", class: "button red-gradient") %><br>
     <%= link_to("新規投稿ページへ", new_workout_path(date: @workout.date), class: "button red-gradient") %>
 </div>

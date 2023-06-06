@@ -1,4 +1,4 @@
-<div class="workouts-new">
+<div class="workouts_new">
     <h1>トレーニング投稿</h1>
     <h2>新しい投稿</h2>
 
@@ -63,31 +63,31 @@
 
             <div class="field">
                 <%= form.label :sets, "何セット目のトレーニングですか？" %><br>
-                <% select_options = [["-", "" ]] + (1..10).map { |n| [n, n] } %>
-                <%= form.select :sets, select_options %>
+                <% select_options = [["--", "" ]] + (1..15).map { |n| [n, n] } %>
+                <%= form.select :sets, select_options %><span>&nbsp;セット目</span>
             </div>
             
             <div class="field">
                 <%= form.label :weight, "重量(kg)" %><br>
-                <% select_options = [["-", "" ]] + (1..200).map { |n| [n * 0.5, n * 0.5] } %>
+                <% select_options = [["--", "" ]] + (1..200).map { |n| [n * 0.5, n * 0.5] } %>
                 <%= form.select :weight, select_options %>
             </div>
             
             <div class="field">
-                <%= form.label :reps, "回数" %><br>
-                <% select_options = [["-", "" ]] + (1..100).map { |n| [n, n] } %>
-                <%= form.select :reps, select_options %>
+                <%= form.label :reps, "回数(レップ数)" %><br>
+                <% select_options = [["--", "" ]] + (1..100).map { |n| [n, n] } %>
+                <%= form.select :reps, select_options %><span>&nbsp;回</span>
             </div>
 
             <div class="field">
-                <%= form.label :speed, "トレーニング速度" %><br>
-                <% select_options = [["-", ""]] + [["クイックトレーニング(1回2秒程度)", 2], ["スロートレーニング(1回5秒程度)", 5]] %>
+                <%= form.label :speed, "トレーニング速度(1回に掛ける時間)" %><br>
+                <% select_options = [["--", ""]] + [["クイック(1回2秒未満)", "Quick"], ["ノーマル(1回3秒程度)", "Normal"], ["スロー(1回5秒程度)", "Slow"]] %>
                 <%= form.select :speed, select_options %>
             </div>
 
             <div class="field">
                 <%= form.label :level, "運動強度" %><br>
-                <% select_options = [["-", ""]] + [["易しい", "low"], ["ふつう", "middle"], ["きつい", "high"]] %>
+                <% select_options = [["--", ""]] + [["易しい", "Easy"], ["ふつう", "Medium"], ["きつい", "Hard"]] %>
                 <%= form.select :level,  select_options%>
             </div>
 
@@ -122,14 +122,14 @@
                                 <p><span class="item-name">セット</span><span class="item-value"><%= workout.sets %>セット目</span></p>
                                 <p><span class="item-name">重量</span><span class="item-value"><%= workout.weight %>kg</span></p>
                                 <p><span class="item-name">回数</span><span class="item-value"><%= workout.reps %>回</span></p>
-                                <p><span class="item-name">速度</span><span class="item-value"><%= workout.speed %>秒</span></p>
+                                <p><span class="item-name">速度</span><span class="item-value"><%= workout.speed %></span></p>
                                 <p><span class="item-name">強度</span><span class="item-value"><%= workout.level %></span></p>
                                 <p><span class="item-name">カロリー</span><span class="item-value"><%= workout.calories %>kcal</span></p>
 
                                 <p class="link_button">
                                     <span><%= link_to("詳細", workout_path(workout, referrer: request.original_url)) %>
                                     <span><%= link_to("編集", edit_workout_path(workout, referrer: request.original_url)) %></span>
-                                    <span><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？", turbo_method: "delete" }) %></span>
+                                    <span><%= link_to("削除", workout_path(workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？\n実行後、この操作は復元することができず、データは完全に消去されます。", turbo_method: "delete" }) %></span>
                                 </p>
                             </div>
                         <% end %>
