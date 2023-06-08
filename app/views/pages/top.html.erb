@@ -15,16 +15,50 @@
     <p class="text">
         アプリに搭載されている機能を一部紹介します。
     </p>
-    <div class="block">
-        <h3>トレーニング記録機能</h3>
+
+    <h3>トレーニング投稿機能</h3>
+    <div class="container">
+        <div class="text-content">
+            <div class="text">
+                いつも行っている自分のトレーニングを投稿して記録しましょう。
+                重量、セット数、レップ数を含む詳細な情報を記入して、フィットネス記録を作成します。
+                入力された情報を元に、下記のカロリー計算機能やトレーニングカレンダー機能を利用できます。
+            </div>
+        </div>
+        
+        <div class="image-content">
+            <%= image_tag "workout_post_image", alt: "トレーニング投稿画像" %>
+        </div>
+
     </div>
 
-    <div class="block">
-        <h3>カロリー計算機能</h3>
+    <h3>カロリー計算機能</h3>
+    <div class="container">
+        <div class="text-content">
+            <div class="text">
+                マシントレーニングがどれだけのエネルギーを消費したのか知りたいですか？
+                当アプリのカロリー計算機能がその答えを出します。
+                各エクササイズの重量、セット数、レップ数を入力し、消費カロリーを自動で計算します。
+            </div>
+        </div>
+        <div class="image-content">
+            <%= image_tag "calories_calculate_image", alt: "トレーニング投稿画像" %>
+        </div>
     </div>
     
-    <div class="block">
-        <h3>トレーニングカレンダー機能</h3>
+    <h3>トレーニングカレンダー機能</h3>
+    <div class="container">
+        <div class="text-content">
+            <div class="text">
+                運動の習慣をつけるためには、自分の進捗を把握することが大切です。
+                トレーニングカレンダー機能で、過去のトレーニングを一覧表示し、トレーニングを行った日数や、
+                消費したカロリーを一目で確認できます。今後の目標設定に役立てましょう。
+            </div>
+        </div>
+
+        <div class="image-content">
+            <%= image_tag "calendar_image", alt: "カレンダー表示画像" %>
+        </div> 
     </div>
 
     <% if @current_user.blank? %>

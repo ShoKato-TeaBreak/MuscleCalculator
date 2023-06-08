@@ -113,10 +113,9 @@ class WorkoutsController < ApplicationController
     else
       @end_month = Date.parse(params[:date]).end_of_month
     end
-    puts "end_month: #{@end_month}"
 
     #1年間分のトレーニングを取得
-    @workouts = Workout.where(date: (@end_month - 11.months)..@end_month, user_id: @current_user.id )
+    @workouts = Workout.where(date: (@end_month - 11.months).beginning_of_month..@end_month, user_id: @current_user.id )
   end
 
   def calendar_month

@@ -37,6 +37,6 @@
     <% end %>
 
     <%= link_to "#{@target_day.year}年#{@target_day.month}月#{@target_day.day}日の投稿画面へ", new_workout_path(date: params[:date]), class: "button blue-gradient" %><br>
-    <%= link_to "月間カレンダーへ", "/workouts/calendar/month/#{params[:date]}", class: "button blue-gradient" %><br>
+    <%= link_to "#{@target_day.year}年#{@target_day.month}月のトレーニング記録へ", "/workouts/calendar/month/#{params[:date]}", class: "button blue-gradient" %><br>
     <%= link_to "年間カレンダーへ", "/workouts//calendar/year", class: "button blue-gradient" %>
 </div>

@@ -100,8 +100,6 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find_by(id: @current_user.id)
-    puts "送信された変更内容は下記です"
-    puts user_params;
     if params[:user][:change_password] == "1"
       if @user.authenticate(params[:user][:current_password])
         if params[:user][:password] == params[:user][:password_confirmation]

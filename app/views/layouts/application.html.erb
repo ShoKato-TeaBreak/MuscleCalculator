@@ -105,16 +105,15 @@
 
     <div class="footer">
 
-      <div class="footer-left">
-        <%= link_to("MuscleCalculator", "/") %>
+      <%= link_to "/", class: "footer-logo" do %>
+        <%= image_tag "logo", alt: "logo", class: "logo" %>
+      <% end %>
+
+      <%#
+      <div class="footer-items">
+        後々、フッターにアイテムを追加する用の要素
       </div>
-    
-      <div class="footer-right">
-        <%= link_to("カロリー計算について", "/exercise/index") %>
-      </div>
-    
-      <div class="clear"></div>
-    
+      %>
     </div>
   </body>
 </html>
