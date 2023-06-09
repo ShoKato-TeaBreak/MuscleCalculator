@@ -70,7 +70,7 @@
     <% else %>
         <h2>ログアウトはこちら</h2>
         <div class="block">
-            <%= link_to "ログアウト", "/users/sign_out", class: "button orange-gradient" %>
+            <%= link_to "ログアウト", "/users/sign_out", class: "button orange-gradient", data: {"turbo-method": :delete} %>
         </div>
     <% end %>
 

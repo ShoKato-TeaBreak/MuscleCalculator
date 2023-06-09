@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   get 'users/sign_in' => 'users#sign_in_form'#ユーザーログイン画面
   delete 'users/sign_out' => 'users#sign_out'#ユーザーログアウト処理
 
-  get 'users/mypage' => 'users#mypage'
+  get 'users/mypage' => 'users#mypage'#マイページへのルーティング
+  get 'users/destroy' => 'users#user_destroy_form'#ユーザー消去のためのパスワード認証をするルーティング
 
   resources :users, only: [
     :new,      # ユーザの新規作成画面

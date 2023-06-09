@@ -1,5 +1,6 @@
 class User < ApplicationRecord
     has_secure_password
+    has_many :workouts, dependent: :destroy
     attr_accessor :current_password, :new_password, :password_confirmation, :change_password
 
     validates :name, presence: {message: "名前が入力されていません"}, length: { maximum: 50, message: "名前は50文字以内で入力してください" }

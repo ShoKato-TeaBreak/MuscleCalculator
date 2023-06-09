@@ -149,10 +149,24 @@ class UsersController < ApplicationController
     params.require(:user).permit(:name, :email, :height, :weight, :age, :sex, :current_password, :change_password, :password, :password_confirmation)
   end
 
+  def user_destroy_form
+    @user = User.find_by(id: @current_user.id)
+  end
+
   def destroy
-    puts "アカウント消去アクションに入りました。"
-    flash[:notice] = "アカウントを消去しました"
-    redirect_to "/"
+    @user = User.find(params[:id])
+
+    # bcryptでパスワードを認証
+    if @user.authenticate(params[:password])
+      @user.workouts.destroy_all
+      @user.destroy
+      flash[:notice] = "アカウントを削除しました。"
+      redirect_to root_path
+    else
+      flash[:notice] = "パスワードが間違っています。"
+      flash[:error_message] = "パスワードが間違っています。"
+      redirect_to "/users/destroy"  # パスワード確認画面へ遷移するなど適切な遷移先を指定
+    end
   end
 
 end

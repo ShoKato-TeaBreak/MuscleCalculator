@@ -1,0 +1,31 @@
+<div class="user_destroy_form">
+    <h1>ユーザー消去</h1>
+
+    <p class="text">
+        アカウントを完全に削除する前にパスワードの確認を行います。
+        パスワードを入力し、「アカウント削除」ボタンを押してください。
+        これにより、あなたの全てのデータと情報が完全に消去されます。
+        登録されているアカウントの情報だけでなく、投稿したトレーニングデータなども消去いたします。
+        復元は不可能ですので、十分ご注意ください。
+    </p>
+
+    <h2>パスワード認証</h2>
+
+    <% if flash[:error_message] %>
+        <p class="error_messages">
+            <%= flash[:error_message] %>
+        </p>
+    <% end %>
+
+    <%= form_with url: user_path(@user), method: :delete, local: true do |form| %>
+        <div class="field">
+            <%= form.label :password %><br>
+            <%= form.password_field :password %><br>
+        </div>
+
+        <div class="actions">
+            <%= form.submit "アカウント消去", class: "button red-gradient", data: { turbo_confirm: "アカウントの消去を行います。\nよろしいですか？"} %>
+        </div>
+    <% end %>
+
+</div>

@@ -11,8 +11,8 @@
         <p><span class="item-name">消費カロリー</span><span class="item-value"><%= @workout.calories %>kcal</span></p>
 
         <p class="link_button">
-            <span><%= link_to("編集", edit_workout_path(@workout, referrer: request.original_url)) %></span>
-            <span><%= link_to("削除", workout_path(@workout, referrer: request.original_url), data: { turbo_confirm: "本当に削除しますか？\n実行後、この操作は復元することができず、データは完全に消去されます。", turbo_method: "delete" }) %></span>
+            <span><%= link_to("編集", edit_workout_path(@workout)) %></span>
+            <span><%= link_to("削除", workout_path(@workout), data: { turbo_confirm: "本当に削除しますか？\n実行後、この操作は復元することができず、データは完全に消去されます。", turbo_method: "delete" }) %></span>
         </p>
     </div>
 </div>
