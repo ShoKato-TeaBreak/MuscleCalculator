@@ -1,5 +1,9 @@
 class UsersController < ApplicationController
 
+  before_action :ensure_correct_user!, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!, except: [:new, :create, :sign_in, :sign_in_form]
+  before_action :forbid_login_user!, only: [:new, :create, :sign_in, :sign_in_form]
+
 #ログインログアウト機能-------------------------------------------------------------
   def sign_in_form
   end
@@ -154,7 +158,7 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    @user = User.find(params[:id])
+    @user = User.find_by(id: params[:id])
 
     # bcryptでパスワードを認証
     if @user.authenticate(params[:password])
@@ -169,4 +173,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def ensure_correct_user!
+    @user = User.find_by(id: params[:id])
+    if @user.nil? || @current_user.id != @user.id
+      flash[:notice] = "権限がありません"
+      redirect_to root_path;
+    end
+  end
 end

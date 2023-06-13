@@ -1,5 +1,8 @@
 class WorkoutsController < ApplicationController
 
+  before_action :authenticate_user!
+  before_action :ensure_correct_user!, only: [:show, :edit, :update, :destroy]
+
   #以下3つはcreateアクションとupdateアクションで利用する共通処理を関数化したもの---------------
   
   #入力されたトレーニング速度(Quick, Normal, Slow)に対して、それぞれ(2秒,3秒,5秒)返す関数
@@ -102,7 +105,7 @@ class WorkoutsController < ApplicationController
   end
 
   def show
-    @workout = Workout.find(params[:id])
+    @workout = Workout.find_by(id: params[:id])
   end
 
   def calendar_year
@@ -155,12 +158,12 @@ class WorkoutsController < ApplicationController
 
 
   def edit
-    @workout = Workout.find(params[:id])
+    @workout = Workout.find_by(id: params[:id])
     @exercises = Exercise.all
   end
 
   def update
-    @workout = Workout.find(params[:id])
+    @workout = Workout.find_by(id: params[:id])
     
     #運動の種類と運動強度に応じてmets値を取得する
     mets = get_exercise_mets(params[:workout][:name], params[:workout][:level])
@@ -190,10 +193,20 @@ class WorkoutsController < ApplicationController
     
 
   def destroy
-    @workout = Workout.find(params[:id])
+    @workout = Workout.find_by(id: params[:id])
     date = @workout.date
     @workout.destroy
     flash[:notice] = "トレーニングを削除しました"
     redirect_to "/workouts/calendar/day/#{date}"
+  end
+
+  private
+
+  def ensure_correct_user!
+    @workout = Workout.find_by(id: params[:id])
+    if @workout.nil? || @workout.user_id != @current_user.id
+      flash[:notice] = "権限がありません"
+      redirect_to("/") 
+    end
   end
 end

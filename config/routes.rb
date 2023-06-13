@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   get 'workouts/calendar/day/:date' => 'workouts#calendar_day'
 
   resources :workouts, only: [
-    :index,#ユーザのワークアウト一覧画面
+    # :index,#ユーザのワークアウト一覧画面
     :show,#ユーザのワークアウト詳細画面
     :new,#ユーザのワークアウト新規作成画面
     :create,#ユーザのワークアウト新規作成処理
