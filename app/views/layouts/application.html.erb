@@ -85,7 +85,6 @@
             <li class="sidebar-item"><%= link_to "トレーニング記録", "/workouts/calendar/year" %></li>
             <li class="sidebar-item"><%= link_to "アカウント情報", user_path(@current_user) %></li>
             <li class="sidebar-item"><%= link_to "", "" %></li>
-            <li class="sidebar-item"><%= link_to "", "" %></li>
             <li class="sidebar-item"><%= link_to "ログアウト", "/users/sign_out", data: {"turbo-method": :delete} %></li>
           </ul>
         <% else %>
@@ -109,11 +108,11 @@
         <%= image_tag "logo", alt: "logo", class: "logo" %>
       <% end %>
 
-      <%#
-      <div class="footer-items">
-        後々、フッターにアイテムを追加する用の要素
-      </div>
-      %>
+      <ul class="footer-items">
+        <li><%= link_to "対応トレーニング一覧", exercises_path %></li>
+        <li><%= link_to "カロリー計算について", "/pages/how_to_calculate" %></li>
+      </ul>
+
     </div>
   </body>
 </html>

@@ -1,6 +1,16 @@
 <h1><%= @exercise.name %></h1>
-<p>
-    <span>高負荷時：<%= @exercise.mets_high %></span>
-    <span>中負荷時：<%= @exercise.mets_middle %></span>
-    <span>低負荷時：<%= @exercise.mets_low %></span>
+
+<h2>Mets値</h2>
+
+<p>高負荷時：<%= @exercise.mets_high %>Mets</p>
+<p>中負荷時：<%= @exercise.mets_middle %>Mets</p>
+<p>低負荷時：<%= @exercise.mets_low %>Mets</p>
+
+<h2>カロリー計算式について</h2>
+
+<p class="text">
+    当アプリでは上記のMets値を利用してカロリー計算を行っています。
+    詳しい計算式は下記ボタンを押して、別ページにて確認してください。
 </p>
+
+<%= link_to "カロリー計算方法", "/pages/how_to_calculate", class: "button blue-gradient" %>

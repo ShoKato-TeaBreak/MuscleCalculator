@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
 
   root 'pages#top'#トップページ
-
+  
+  get 'pages/how_to_calculate' => 'pages#how_to_calculate_calories'#カロリー計算方法を掲載しているページ
 
   post 'users/sign_in' => 'users#sign_in'# ユーザーログイン処理
   get 'users/sign_in' => 'users#sign_in_form'#ユーザーログイン画面

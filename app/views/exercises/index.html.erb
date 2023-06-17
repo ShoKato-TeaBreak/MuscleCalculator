@@ -1,12 +1,18 @@
-<h1>トレーニング項目一覧</h1>
+<div class="exercises-index">
+    <h1>トレーニング項目一覧</h1>
 
-<% @exercises.each do |exercise| %>
-    <p> <%= link_to("トレーニング名称 : #{exercise.name}", exercise_path(exercise.id)) %> </p>
-<% end %>
+    <h2>当アプリの対応トレーニング</h2>
 
-<h2>有酸素運動</h2>
+    <h3>マシントレーニング</h3><br>
 
-<h2>マシントレーニング</h2>
+    <div class="exercises">
+        <% @exercises.each do |exercise| %>
+            <%= link_to("#{exercise.name}", exercise_path(exercise), class: "exercises-item red-gradient") %>
+        <% end %>
+    </div>
 
-<h2>自重トレーニング</h2>
-
+    <%#
+    <h2>有酸素運動</h2>
+    <h2>自重トレーニング</h2> 
+    %>
+</div>

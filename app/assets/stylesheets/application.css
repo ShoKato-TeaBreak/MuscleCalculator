@@ -380,7 +380,9 @@ main .sidebar-heading{
 
   display: flex;
   justify-content: space-around;
-  flex-direction: row;
+  flex-direction: column;
+
+  align-items: center;
 }
 .footer-logo{
   max-width: 300px;
@@ -389,14 +391,18 @@ main .sidebar-heading{
 .footer-items{
   max-width: 300px;
   margin-bottom: 20px;
-}
-@media(max-width: 720px){
-  .footer{
-    align-items: center;
-    flex-direction: column;
-  }
-}
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.footer-items li{
+  list-style: square;
+}
+.footer-items a{
+  text-decoration: none;
+}
 /* top.html.erbのcss-------------- */
 .hero-image{
   width: calc(100% + 2 * 30px);
@@ -445,24 +451,25 @@ main .sidebar-heading{
   text-indent: 1em;
 }
 
-/* workouts/new.html.erb のcss-------------------- */
+/* workouts/new.html.erb, exercises#index.html のcss-------------------- */
 .field{
   margin-bottom: 20px;
 }
 .date-field{
   font-size: 1rem;
 }
-.workouts_new a{
+.workouts_new a, .exercises-index a{
   text-decoration: none;
 }
+
 .workouts_new select, .workouts_edit select{
   font-size: 1rem;
 }
-.workouts_new .exercises{
+.exercises{
   display: flex;
   flex-wrap: wrap;
 }
-.workouts_new .exercises .exercises-item{
+.exercises .exercises-item{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -476,7 +483,7 @@ main .sidebar-heading{
   background-color: #2af598
 }
 @media(max-width: 520px){
-  .workouts_new .exercises .exercises-item{
+  .exercises .exercises-item{
     width: 31.33%
   }
 }
