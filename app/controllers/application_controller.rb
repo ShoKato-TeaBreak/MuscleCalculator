@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
     #ユーザーがログイン中かを確認するメソッド
     def authenticate_user!
         if @current_user.nil?
-            redirect_to login_path, notice: "ログインが必要です"
+            redirect_to "/users/sing_in_form", notice: "ログインが必要です"
         end
     end
 
