@@ -48,17 +48,27 @@ class WorkoutsController < ApplicationController
   end
 
   def new
+
+
+    @workouts_this_day = Workout.where(date: params[:date], user_id: @current_user.id)
+    @exercises = Exercise.all
+
+    #View画面で投稿するトレーニング項目が選択されていた場合、@workouts_this_dayから抽出する。
+    target_workouts = @workouts_this_day.where(name: params[:name])
+    num_sets = target_workouts.count() + 1
+    last_input = target_workouts.last if target_workouts.any?
+
+    #sets, weight, repsの3項目に関しては自動入力されるように自動計算。
+    #weightとrepsは前回入力した値と同値を入力しておく。
     @workout = Workout.new(
       name: params[:name],
-      sets: flash[:sets],
-      weight: flash[:weight],
-      reps: flash[:reps],
+      sets: flash[:sets] || num_sets,
+      weight: flash[:weight] || last_input&.weight,
+      reps: flash[:reps] || last_input&.reps,
       speed: flash[:speed],
       level: flash[:level],
       date: params[:date]
     )
-    @workouts_this_day = Workout.where(date: params[:date], user_id: @current_user.id)
-    @exercises = Exercise.all
 
     @calories_this_day = 0
     if @workouts_this_day.present?

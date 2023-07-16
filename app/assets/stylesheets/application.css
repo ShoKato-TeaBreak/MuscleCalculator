@@ -398,10 +398,10 @@ main .sidebar-heading{
   justify-content: center;
 }
 .footer-items li{
-  list-style: square;
+  list-style: none;
 }
 .footer-items a{
-  text-decoration: none;
+  text-decoration: underline 1px;
 }
 /* top.html.erbのcss-------------- */
 .hero-image{
